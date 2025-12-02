@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Marajoara</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2e9da;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #5a2d0c;
+      margin-bottom: 30px;
+    }
+
+    .catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: transform .2s;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .card h2 {
+      margin: 10px 0 5px;
+      color: #5a2d0c;
+    }
+
+    .info {
+      display: none;
+      margin-top: 10px;
+      color: #333;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .card.ativo .info {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Catálogo Interativo — Cerâmicas Marajoaras</h1>
+
+  <div class="catalogo">
+
+    <div class="card" onclick="toggleInfo(this)">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Ceramica_Marajoara_01.jpg" alt="Peça Marajoara">
+      <h2>Urna Funerária</h2>
+      <p><strong>Data:</strong> 1100–1300 d.C.</p>
+
+      <div class="info">
+        <p>Peça típica da cultura Marajoara, com grafismos geométricos e uso ritual. Encontrada na Ilha de Marajó.</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggleInfo(this)">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c9/Ceramica_Marajoara_Museu_Goeldi.jpg" alt="Peça Marajoara">
+      <h2>Vaso Decorado</h2>
+      <p><strong>Data:</strong> 400–700 d.C.</p>
+
+      <div class="info">
+        <p>Vaso com desenhos simétricos representando elementos espirituais e animais da Amazônia.</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="toggleInfo(this)">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Ceramica_Marajoara_03.jpg" alt="Peça Marajoara">
+      <h2>Escultura Zoomórfica</h2>
+      <p><strong>Data:</strong> 800–1000 d.C.</p>
+
+      <div class="info">
+        <p>Representação de animal em estilo marajoara, muito usada em cerimônias e como objeto simbólico.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleInfo(card) {
+      card.classList.toggle('ativo')
+    }
+  </script>
+
+</body>
+</html>
