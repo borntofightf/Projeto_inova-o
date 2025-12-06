@@ -207,19 +207,6 @@
 
     </div>
 
-    <!-- CONTADOR -->
-    <div style="margin-top: 20px; font-size: 18px; color: #333; text-align: center;">
-        <p><strong>Acessos desta página:</strong> <span id="contador"></span></p>
-    </div>
-
-    <script>
-        let visitas = localStorage.getItem("contador_estatueta");
-        visitas = visitas ? parseInt(visitas) + 1 : 1;
-
-        localStorage.setItem("contador_estatueta", visitas);
-        document.getElementById("contador").textContent = visitas;
-    </script>
-
     <footer>
         <p>Email: borntofightfll@gmail.com</p>
         <p>Instagram: <a href="https://www.instagram.com/borntofight_fll/" target="_blank">@borntofight_fll</a></p>

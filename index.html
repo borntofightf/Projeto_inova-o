@@ -51,25 +51,31 @@
             height: 80px;
         }
 
-        .insta-text {
+        .links-area {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.4;
+        }
+
+        .insta-text, .email-text {
             font-size: 16px;
             font-weight: 600;
             color: var(--terra-escura);
+            text-decoration: none;
             transition: 0.3s;
         }
 
-        .insta-text:hover {
+        .insta-text:hover, .email-text:hover {
             color: var(--terra-media);
         }
 
-        /* AGRUPAMENTO DE BOTÕES NO HEADER */
+        /* BOTÕES */
         .header-buttons {
             display: flex;
             gap: 12px;
             align-items: center;
         }
 
-        /* BOTÃO DO CATÁLOGO */
         nav button {
             padding: 16px 32px;
             font-size: 18px;
@@ -86,7 +92,6 @@
             background: var(--terra-media);
         }
 
-        /* BOTÃO DE DOWNLOAD */
         .download-btn {
             padding: 14px 26px;
             font-size: 18px;
@@ -102,7 +107,6 @@
             background: #b06a40;
         }
 
-        /* DROPDOWN */
         nav .dropdown {
             display: none;
             position: absolute;
@@ -152,7 +156,6 @@
             font-size: 18px;
         }
 
-        /* GRID DOS TÓPICOS */
         .topics {
             margin-top: 40px;
             display: grid;
@@ -186,16 +189,23 @@
             color: var(--terra-escura);
         }
 
-        /* RESPONSIVO */
+        /* RODAPÉ */
+        footer {
+            margin-top: 40px;
+            font-weight: 600;
+            color: var(--terra-escura);
+            font-size: 16px;
+        }
+
         @media (max-width: 600px) {
             header {
                 flex-direction: column;
-                gap: 15px;
                 text-align: center;
+                gap: 20px;
             }
 
-            nav button, .download-btn {
-                width: 100%;
+            .brand-area {
+                flex-direction: column;
             }
         }
     </style>
@@ -206,7 +216,11 @@
     <header>
         <div class="brand-area">
             <img src="images/Logo_Btf.png" alt="Logo Born To Fight">
-            <a class="insta-text" href="https://instagram.com/borntofight_fll" target="_blank">@borntofight_fll</a>
+
+            <div class="links-area">
+                <a class="insta-text" href="https://instagram.com/borntofight_fll" target="_blank">@borntofight_fll</a>
+                <a class="email-text" href="mailto:borntofightfll@gmail.com">borntofightfll@gmail.com</a>
+            </div>
         </div>
 
         <div class="header-buttons">
@@ -216,8 +230,8 @@
                 <div class="dropdown" id="catalogMenu">
                     <a href="index1.html">Urna Funerária Marajoara</a>
                     <a href="index2.html">Urna Funerária Maracá</a>
-                    <a href="index3.html">Estatueta Patajônica 1</a>
-                    <a href="index4.html">Estatueta Patajônica 2</a>
+                    <a href="index3.html">Estatueta Tapajônica 1</a>
+                    <a href="index4.html">Estatueta Tapajônica 2</a>
                 </div>
             </nav>
 
@@ -233,7 +247,6 @@
         <p>Nosso projeto busca facilitar o acesso ao patrimônio arqueológico amazônico com uma solução interativa, educativa e moderna.</p>
 
         <div class="topics">
-
             <div class="topic-box">
                 <img src="images/rfid.jfif" alt="Sensor RFID RC522">
                 <h2>Sensor RFID RC522</h2>
@@ -251,18 +264,21 @@
                 <h2>Impressão 3D</h2>
                 <p>Produzimos réplicas arqueológicas para toque, estudo e inclusão sensorial, trazendo acessibilidade e aprendizado prático.</p>
             </div>
-
         </div>
     </div>
 
-    <!-- SCRIPT DO DROPDOWN -->
+    <!-- RODAPÉ COM CONTADOR -->
+    <footer>
+        Acessos ao site: <span id="visits">0</span>
+    </footer>
+
+    <!-- SCRIPTS -->
     <script>
         function toggleDropdown() {
             const menu = document.getElementById("catalogMenu");
             menu.style.display = menu.style.display === "block" ? "none" : "block";
         }
 
-        // Fecha o menu ao clicar fora
         document.addEventListener("click", function(e) {
             const menu = document.getElementById("catalogMenu");
             const button = document.querySelector("nav button");
@@ -271,6 +287,12 @@
                 menu.style.display = "none";
             }
         });
+
+        // CONTADOR DE ACESSOS LOCAL
+        let count = localStorage.getItem("visits_btf_main");
+        count = count ? Number(count) + 1 : 1;
+        localStorage.setItem("visits_btf_main", count);
+        document.getElementById("visits").textContent = count;
     </script>
 
 </body>

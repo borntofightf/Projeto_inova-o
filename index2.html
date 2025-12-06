@@ -206,20 +206,6 @@
 
 </div>
 
-<!-- CONTADOR DE ACESSOS EXCLUSIVO -->
-<div id="contador" style="margin-top:20px; font-size:18px; color:#333; font-weight:bold;"></div>
-
-<script>
-    let acessos = localStorage.getItem("contadorAcessos_Maraca");
-
-    acessos = acessos ? parseInt(acessos) + 1 : 1;
-
-    localStorage.setItem("contadorAcessos_Maraca", acessos);
-
-    document.getElementById("contador").innerText =
-        "Acessos a esta peça: " + acessos;
-</script>
-
 <footer>
     <p>Email: borntofightfll@gmail.com</p>
     <p>Instagram: <a href="https://www.instagram.com/borntofight_fll/" target="_blank">@borntofight_fll</a></p>
