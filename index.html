@@ -3,203 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Interativo – Cerâmica Amazônica</title>
-    
+    <title>Born To Fight Robotics – Página Principal</title>
+
+    <!-- Fonte profissional -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --terra-escura: #8a4b2d;
+            --terra-media: #b06a40;
+            --terra-clara: #f4e9dd;
+            --bege: #fff9f2;
+            --preto: #222;
+        }
+
         body {
             margin: 0;
-            background: #f4f1ec;
-            font-family: "Segoe UI", sans-serif;
-            display: grid;
-            place-items: center;
-            padding: 40px;
+            font-family: "Poppins", sans-serif;
+            background: var(--terra-clara);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            width: 95%;
+        /* HEADER */
+        header {
+            width: 100%;
             max-width: 1200px;
-        }
-
-        .card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 22px;
             background: white;
             border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 6px 20px #00000020;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+        }
+
+        /* Logo + Instagram */
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        header img {
+            height: 80px;
+        }
+
+        .insta-text {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--terra-escura);
             transition: 0.3s;
+        }
+
+        .insta-text:hover {
+            color: var(--terra-media);
+        }
+
+        /* BOTÃO DO CATÁLOGO (AUMENTADO) */
+        nav button {
+            padding: 16px 32px;      /* AUMENTADO */
+            font-size: 18px;         /* AUMENTADO */
+            background: var(--terra-escura);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 14px;
             cursor: pointer;
-            padding-bottom: 20px;
+            transition: 0.3s;
         }
 
-        .card:hover {
-            transform: scale(1.05);
+        nav button:hover {
+            background: var(--terra-media);
         }
 
-        .card img {
+        /* DROPDOWN */
+        .dropdown {
+            display: none;
+            position: absolute;
+            background: white;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+            border-radius: 12px;
+            padding: 10px;
+            right: 20px;
+            margin-top: 10px;
+            z-index: 10;
+        }
+
+        .dropdown a {
             display: block;
-            max-width: 250px;
-            width: 100%;
-            height: auto;
-            margin: 15px auto 0;
+            padding: 10px;
+            margin-bottom: 6px;
+            color: var(--terra-escura);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .dropdown a:hover {
+            background: var(--terra-clara);
+        }
+
+        /* CONTEÚDO */
+        .content {
+            max-width: 950px;
+            background: white;
+            padding: 40px;
+            border-radius: 22px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-top: 0;
+            color: var(--terra-escura);
+        }
+
+        p {
+            line-height: 1.7;
+            font-size: 18px;
+        }
+
+        /* GRID DOS TÓPICOS */
+        .topics {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+
+        .topic-box {
+            background: var(--bege);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .topic-box:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+        }
+
+        .topic-box img {
+            width: 180px;
+            margin-bottom: 15px;
             border-radius: 12px;
         }
 
-        .content {
-            padding: 20px;
-            text-align: center;
+        .topic-box h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--terra-escura);
         }
 
-        h2 {
-            margin-top: 10px;
-        }
+        /* RESPONSIVO */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
 
-        .info {
-            margin: 8px 0;
-            color: #444;
-        }
-
-        button {
-            margin-top: 10px;
-            background: #8a4b2d;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: #6d3a22;
-        }
-
-        .description {
-            margin-top: 15px;
-            padding: 12px;
-            background: #f0e7df;
-            border-left: 4px solid #8a4b2d;
-            border-radius: 6px;
-            display: none;
-            animation: fade .4s ease-in-out;
-            text-align: left;
-        }
-
-        .history {
-            margin-top: 12px;
-            background: #e8dfd6;
-            border-left-color: #b06a40;
-        }
-
-        h3 {
-            margin-top: 0;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        @keyframes fade {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #444;
-        }
-
-        footer a {
-            color: #8a4b2d;
-            font-weight: bold;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
+            nav button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<!-- ÁUDIO AUTOMÁTICO COM .M4A -->
-<audio id="audioMarajoara" autoplay muted>
-    <source src="" type="audio/mp4">
-    <source src="audio/marajoara.wav" type="audio/wav">
-</audio>
+    <header>
+        <div class="brand-area">
+            <img src="images/Logo_btf.png" alt="Logo Born To Fight">
+            <a class="insta-text" href="https://instagram.com/borntofight_fll" target="_blank">@borntofight_fll</a>
+        </div>
 
-<script>
-    setTimeout(() => {
-        const audio = document.getElementById("audioMarajoara");
-        audio.muted = false;
-        audio.volume = 0.4;
-    }, 1000);
-</script>
+        <nav>
+            <button onclick="toggleDropdown()">Catálogo Interativo</button>
 
-<div class="grid">
+            <div class="dropdown" id="catalogMenu">
+                <a href="index1.html">Urna Funerária Marajoara</a>
+                <a href="index2.html">Urna Funerária Maracá</a>
+                <a href="index3.html">Estatueta patajoneca</a>
+            </div>
+        </nav>
+    </header>
 
-    <div class="card" onclick="toggleInfo(this)">
-        <img src="images/Urna-Marajoara.jpg" alt="Urna Marajoara">
+    <div class="content">
+        <h1>Equipe Born To Fight – FLL Robotics</h1>
 
-        <div class="content">
-            <h2>Urna Funerária Marajoara</h2>
+        <p>Somos a equipe Born To Fight, criadores, inovadores e apaixonados por tecnologia. Nossa missão é transformar o aprendizado em algo acessível, sensorial e envolvente(adicionar informações).</p>
 
-            <p class="info"><strong>Período:</strong> 400 – 1400 d.C.</p>
-            <p class="info"><strong>Local Encontrado:</strong> Ilha do Marajó – PA</p>
+        <p>Nosso projeto busca facilitar o acesso ao patrimônio arqueológico amazônico com uma solução interativa, educativa e moderna(editar depois).</p>
 
-            <div class="description">
-                <h3><strong>Descrição</strong></h3>
-                As urnas marajoaras eram usadas para abrigar restos mortais de indivíduos
-                importantes na sociedade. Seus traços geométricos representavam crenças,
-                rituais espirituais e animais simbólicos.
+        <!-- TÓPICOS DO PROJETO -->
+        <div class="topics">
+
+            <!-- RFID -->
+            <div class="topic-box">
+                <img src="images/rfid.jfif" alt="Sensor RFID RC522">
+                <h2>Sensor RFID RC522</h2>
+                <p>Utilizado para leitura de cartões e tags. Essencial para ativar conteúdos e tornar a experiência interativa.</p>
             </div>
 
-            <div class="description history">
-                <h3><strong>História</strong></h3>
-                Esta peça foi descoberta em escavações em “tesos”, montes construídos pelas
-                antigas sociedades da Ilha de Marajó. Seu alto nível artístico indica que
-                pertenceu a uma figura de grande importância social.  
-                Os detalhes simétricos e a pintura encarnada refletem o estilo clássico
-                marajoara, representando o ciclo da vida, o mundo espiritual e a natureza.
+            <!-- Raspberry Pi 4 -->
+            <div class="topic-box">
+                <img src="images/raspbarry_pi4.jfif" alt="Raspberry Pi 4">
+                <h2>Raspberry Pi 4</h2>
+                <p>A central de controle do sistema: roda o site, o leitor RFID e toda a lógica do nosso catálogo interativo.</p>
             </div>
 
-            <button>Ver detalhes</button>
+            <!-- Impressão 3D -->
+            <div class="topic-box">
+                <img src="images/3dprint.png" alt="Impressão 3D">
+                <h2>Impressão 3D</h2>
+                <p>Produzimos réplicas arqueológicas para toque, estudo e inclusão sensorial, trazendo acessibilidade e aprendizado prático.</p>
+            </div>
+
         </div>
     </div>
 
-</div>
+    <!-- SCRIPT DO DROPDOWN -->
+    <script>
+        function toggleDropdown() {
+            const menu = document.getElementById("catalogMenu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        }
 
-<footer>
-    <p>Email: borntofightfll@gmail.com</p>
-    <p>Instagram: <a href="https://www.instagram.com/borntofight_fll/" target="_blank">@borntofight_fll</a></p>
-</footer>
+        // Fecha o menu ao clicar fora
+        document.addEventListener("click", function(e) {
+            const menu = document.getElementById("catalogMenu");
+            const button = document.querySelector("nav button");
 
-<script>
-function toggleInfo(card) {
-    const descriptions = card.querySelectorAll(".description");
-    const btn = card.querySelector("button");
-    const isVisible = descriptions[0].style.display === "block";
-
-    descriptions.forEach(desc => {
-        desc.style.display = isVisible ? "none" : "block";
-    });
-
-    btn.textContent = isVisible ? "Ver detalhes" : "Ocultar detalhes";
-}
-</script>
-
-<!-- VLibras (LIBRAS NO SITE) -->
-<div vw class="enabled">
-    <div vw-access-button class="active"></div>
-    <div vw-plugin-wrapper>
-        <div class="vw-plugin-top-wrapper"></div>
-    </div>
-</div>
-
-<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
-<script>
-    new window.VLibras.Widget('https://vlibras.gov.br/app');
-</script>
+            if (!menu.contains(e.target) && e.target !== button) {
+                menu.style.display = "none";
+            }
+        });
+    </script>
 
 </body>
 </html>
