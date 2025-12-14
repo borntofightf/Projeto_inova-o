@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Interativo – Cerâmica Amazônica</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #f4f1ec;
+            font-family: "Segoe UI", sans-serif;
+            display: grid;
+            place-items: center;
+            padding: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px #00000020;
+            transition: 0.3s;
+            padding-bottom: 20px;
+        }
+
+        .card:hover {
+            transform: scale(1.02);
+        }
+
+        .card img {
+            display: block;
+            max-width: 250px;
+            width: 100%;
+            margin: 15px auto 0;
+            border-radius: 12px;
+        }
+
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .info {
+            margin: 8px 0;
+            color: #444;
+        }
+
+        .description {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f0e7df;
+            border-left: 4px solid #8a4b2d;
+            border-radius: 6px;
+            text-align: left;
+        }
+
+        .history {
+            margin-top: 12px;
+            background: #e8dfd6;
+            border-left-color: #b06a40;
+        }
+
+        /* 🎧 Áudio */
+        .audio-box {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .audio-box button {
+            background: #8a4b2d;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            min-width: 140px;
+            transition: 0.3s;
+        }
+
+        .audio-box button:hover {
+            background: #b06a40;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #444;
+        }
+
+        footer a {
+            color: #8a4b2d;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 🔙 VOLTAR AO MENU -->
+<div style="width:100%; max-width:1200px; margin-bottom:20px; text-align:left;">
+    <a href="index.html"
+       style="padding:10px 18px; background:#8a4b2d; color:white; text-decoration:none; border-radius:8px; font-weight:600;">
+       ← Voltar para o menu
+    </a>
+</div>
+
+<div class="grid">
+
+    <div class="card">
+        <img src="images/vaso_de_gargalo.png" alt="Vaso de Gargalo Tapajônico">
+
+        <div class="content">
+            <h2>Vaso de Gargalo Tapajônico</h2>
+
+            <p class="info"><strong>Período:</strong> 1000 d.C – 1600 d.C.</p>
+            <p class="info"><strong>Local Encontrado:</strong> Baixo Amazonas – PA</p>
+            <p class="info"><strong>Tamanho Aproximado:</strong> 20 cm – 40 cm</p>
+
+            <div class="description">
+                <h3>Descrição</h3>
+                É um vaso cerâmico caracterizado por corpo arredondado e gargalo alongado, frequentemente decorado com grafismos geométricos, figuras antropomorfas ou zoomorfas, em relevo ou pintura. 
+                As decorações tinham significados simbólicos, ligados à identidade cultural, espiritualidade e organização social do povo Tapajônico.
+            </div>
+
+            <div class="description history">
+                <h3>História</h3>
+                O vaso de gargalo tapajônico fazia parte do cotidiano e dos rituais das sociedades indígenas da Amazônia pré-colonial. 
+                Ele reflete o alto nível técnico e artístico da cerâmica tapajônica, sendo utilizado tanto em contextos domésticos quanto cerimoniais.
+            </div>
+
+            <!-- 🎧 CONTROLES DE ÁUDIO -->
+            <div class="audio-box">
+                <audio id="audioPeca">
+                    <source src="audios/audio_vaso_de_gargalo.mp4" type="audio/mp4">
+                </audio>
+
+                <button id="startAudio" onclick="startAudio()">▶ Iniciar áudio</button>
+                <button onclick="toggleAudio()">⏸ Pausar</button>
+                <button onclick="resetAudio()">🔄 Reiniciar</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- 🔗 RODAPÉ -->
+<footer>
+    <p><strong>Equipe Born To Fight</strong> – Escola SESI Ananindeua (PA)</p>
+    <p>Email: borntofightfll@gmail.com</p>
+    <p>
+        Instagram:
+        <a href="https://www.instagram.com/borntofight_fll/" target="_blank">
+            @borntofight_fll
+        </a>
+    </p>
+</footer>
+
+<script>
+const audio = document.getElementById("audioPeca");
+const startBtn = document.getElementById("startAudio");
+
+/* ▶️ Libera o áudio no primeiro clique */
+function startAudio() {
+    audio.currentTime = 0;
+    audio.volume = 0.6;
+    audio.play();
+    startBtn.style.display = "none";
+}
+
+/* ⏸ Pausar / Retomar */
+function toggleAudio() {
+    audio.paused ? audio.play() : audio.pause();
+}
+
+/* 🔄 Reiniciar */
+function resetAudio() {
+    audio.currentTime = 0;
+    audio.play();
+}
+</script>
+
+</body>
+</html>
