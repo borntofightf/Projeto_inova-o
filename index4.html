@@ -34,7 +34,7 @@
         }
 
         .card:hover {
-            transform: scale(1.02);
+            transform: scale(1.01); /* Diminuiu o zoom de 1.05 para 1.02 */
         }
 
         .card img {
@@ -49,10 +49,6 @@
         .content {
             padding: 20px;
             text-align: center;
-        }
-
-        h2 {
-            margin-top: 10px;
         }
 
         .info {
@@ -75,6 +71,18 @@
             background: #6d3a22;
         }
 
+        .speech-btn {
+            background: white;
+            color: #333;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .speech-btn:hover {
+            background: #f4e9dd;
+        }
+
         .description {
             margin-top: 15px;
             padding: 12px;
@@ -90,12 +98,6 @@
             margin-top: 12px;
             background: #e8dfd6;
             border-left-color: #b06a40;
-        }
-
-        h3 {
-            margin-top: 0;
-            margin-bottom: 8px;
-            color: #333;
         }
 
         @keyframes fade {
@@ -114,11 +116,12 @@
             font-weight: bold;
             text-decoration: none;
         }
+
         footer a:hover {
             text-decoration: underline;
         }
 
-        /* ★ SISTEMA DE AVALIAÇÃO ★ */
+        /* ⭐ ESTRELAS */
         .rating {
             display: flex;
             justify-content: center;
@@ -127,10 +130,10 @@
         }
 
         .star {
-            font-size: 26px;
-            color: #ccc;
+            font-size: 28px;
+            color: #cfcfcf;
+            margin: 0 4px;
             transition: 0.2s;
-            margin: 0 3px;
         }
 
         .star.selected {
@@ -138,47 +141,58 @@
             transform: scale(1.2);
         }
 
+        /* Contador */
+        #contador {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 
 <body>
+
 <!-- BOTÃO VOLTAR PARA O MENU -->
-<div style="width:100%; max-width:1200px; margin-bottom:20px; text-align:left;">
+<div style="width:100%; max-width:1200px; margin-bottom:20px; display:flex; gap:12px; align-items:center;">
+
+    <!-- VOLTAR -->
     <a href="index.html" 
-       style="padding:10px 18px; background:#8a4b2d; color:white; text-decoration:none; border-radius:8px; font-weight:600; transition:0.3s;"
-       onmouseover="this.style.background='#b06a40'" 
-       onmouseout="this.style.background='#8a4b2d'">
+       id="voltarMenu"
+       style="padding:10px 18px; background:#8a4b2d; color:white; text-decoration:none; border-radius:8px; font-weight:600;">
        ← Voltar para o menu
     </a>
+
+    <!-- 🔊 OUVIR "VOLTAR PARA O MENU" -->
+    <button onclick="ouvirVoltarMenu()" 
+        aria-label="Ouvir texto voltar para o menu"
+        style="padding:10px 14px; background:white; border:2px solid #8a4b2d; color:#8a4b2d; border-radius:8px; font-weight:600; cursor:pointer;">
+        🔊 Ouvir
+    </button>
 </div>
-
-
-
-<!-- ÁUDIO AUTOMÁTICO -->
-<audio id="audioMarajoara" autoplay muted>
-    <source src="" type="audio/mp4">
-    <source src="audio/marajoara.wav" type="audio/wav">
-</audio>
-
-<script>
-    setTimeout(() => {
-        const audio = document.getElementById("audioMarajoara");
-        audio.muted = false;
-        audio.volume = 0.4;
-    }, 1000);
-</script>
 
 <div class="grid">
 
+    <!-- CARD COM AVALIAÇÃO -->
     <div class="card" onclick="toggleInfo(this)">
         <img src="images/Estatueta_Tapajonica1.png" alt="Estatueta Tapajonica">
 
         <div class="content">
-            <h2>Estatueta Tapajônica 2</h2>
+            <h2 id="titulo">Estatueta Tapajônica 2</h2>
+            <button class="speech-btn" onclick="readText('Estatueta Tapajônica 2')">🔊 Ouvir título</button>
 
-            <p class="info"><strong>Período:</strong> 800 d.C – 1600 d.C.</p>
-            <p class="info"><strong>Local Encontrado:</strong> Baixo Amazonas – PA</p>
-            <p class="info"><strong>Tamanho Aproximado:</strong> 10 cm - 20 cm</p>
+            <!-- PERÍODO -->
+            <p id="periodo" class="info"><strong>Período:</strong> 800 a 1600 depois de Cristo.</p>
+            <button class="speech-btn" onclick="readText(document.getElementById('periodo').innerText)">🔊 Ouvir período</button>
+
+            <!-- LOCAL -->
+            <p id="local" class="info"><strong>Local Encontrado:</strong> Baixo Amazonas, Pará.</p>
+            <button class="speech-btn" onclick="readText(document.getElementById('local').innerText)">🔊 Ouvir local</button>
+
+            <!-- TAMANHO -->
+            <p id="tamanho" class="info"><strong>Tamanho Aproximado:</strong> entre 10 e 20 centímetros.</p>
+            <button class="speech-btn" onclick="readText(document.getElementById('tamanho').innerText)">🔊 Ouvir tamanho</button>
 
             <!-- ⭐ SISTEMA DE AVALIAÇÃO ⭐ -->
             <div class="rating" data-id="estatueta_tapajo">
@@ -189,19 +203,23 @@
                 <span class="star" data-star="5">★</span>
             </div>
 
-            <div class="description">
-                <h3><strong>Descrição</strong></h3>
+            <!-- DESCRIÇÃO -->
+            <div id="descricao" class="description" style="display:block;">
+                <h3>Descrição</h3>
                 A peça representa uma figura antropomorfa sentada, confeccionada em cerâmica com acabamento claro. 
                 A personagem segura um objeto tubular, sugerindo um instrumento musical — possivelmente uma flauta — indicando relação com práticas rituais, musicais ou cerimoniais.
-            </div>
 
-            <div class="description history">
-                <h3><strong>História</strong></h3>
+            </div>
+            <button class="speech-btn" onclick="readText(document.getElementById('descricao').innerText)">🔊 Ouvir descrição</button>
+
+            <!-- HISTÓRIA -->
+            <div id="historia" class="description history" style="display:block;">
+                <h3>História</h3>
                 Esse tipo de figura é comum entre as sociedades ceramistas amazônicas que existiram entre 800 d.C. e 1600 d.C. Elas criavam representações humanas para funções rituais, xamânicas, funerárias ou míticas. 
                 A presença do instrumento musical sugere forte relação com práticas cerimoniais ligadas à música, elemento essencial nas tradições espirituais amazônicas.
             </div>
+            <button class="speech-btn" onclick="readText(document.getElementById('historia').innerText)">🔊 Ouvir história</button>
 
-            <button>Ver detalhes</button>
         </div>
     </div>
 
@@ -212,21 +230,8 @@
     <p>Instagram: <a href="https://www.instagram.com/borntofight_fll/" target="_blank">@borntofight_fll</a></p>
 </footer>
 
-<script>
-function toggleInfo(card) {
-    const descriptions = card.querySelectorAll(".description");
-    const btn = card.querySelector("button");
-    const isVisible = descriptions[0].style.display === "block";
 
-    descriptions.forEach(desc => {
-        desc.style.display = isVisible ? "none" : "block";
-    });
-
-    btn.textContent = isVisible ? "Ver detalhes" : "Ocultar detalhes";
-}
-</script>
-
-<!-- ⭐ SISTEMA DE AVALIAÇÃO (SEM ENVIO) ⭐ -->
+<!-- ⭐ SCRIPT DE AVALIAÇÃO -->
 <script>
 document.querySelectorAll(".rating").forEach(rating => {
     const id = rating.getAttribute("data-id");
@@ -235,17 +240,15 @@ document.querySelectorAll(".rating").forEach(rating => {
     if (savedRating) highlightStars(rating, savedRating);
 
     rating.querySelectorAll(".star").forEach(star => {
-        star.addEventListener("click", () => {
+        star.addEventListener("click", e => {
+            e.stopPropagation(); // impede abrir/fechar card ao clicar na estrela
             const value = star.getAttribute("data-star");
-
-            // Salva localmente
             localStorage.setItem("rating_" + id, value);
             highlightStars(rating, value);
         });
     });
 });
 
-// Função para colorir as estrelas
 function highlightStars(rating, value) {
     rating.querySelectorAll(".star").forEach(star => {
         star.classList.remove("selected");
@@ -253,6 +256,34 @@ function highlightStars(rating, value) {
             star.classList.add("selected");
         }
     });
+}
+</script>
+
+<script>
+function ouvirVoltarMenu() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+
+        const fala = new SpeechSynthesisUtterance("Voltar para o menu");
+        fala.lang = "pt-BR";
+        fala.rate = 1;
+
+        window.speechSynthesis.speak(fala);
+    }
+}
+</script>
+
+<script>
+function readText(text) {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = 'pt-BR';
+        speech.rate = 1;
+        window.speechSynthesis.speak(speech);
+    } else {
+        alert("Leitura de voz não suportada neste navegador.");
+    }
 }
 </script>
 
