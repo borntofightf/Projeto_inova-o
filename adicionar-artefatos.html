@@ -60,26 +60,48 @@ button:hover{
     </button>
 </div>
 
-<script>
-function salvarArtefato(){
-    const nome = document.getElementById("nome").value;
-    const descricao = document.getElementById("descricao").value;
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    if(!nome || !descricao){
-        alert("Preencha todos os campos");
-        return;
+const firebaseConfig = {
+  apiKey: "AIzaSyBls7v_X5_7EYXh4U3aYTTAT7RAOArDmjM",
+  authDomain: "catalogo-artefatos.firebaseapp.com",
+  projectId: "catalogo-artefatos",
+  storageBucket: "catalogo-artefatos.firebasestorage.app",
+  messagingSenderId: "399410630744",
+  appId: "1:399410630744:web:ee2d6b509ac2113199fa2d",
+  measurementId: "G-PSS0B119PP"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.salvarArtefato = async function(){
+    try{
+        const nome = document.getElementById("nome").value;
+        const descricao = document.getElementById("descricao").value;
+
+        if(!nome || !descricao){
+            alert("Preencha todos os campos");
+            return;
+        }
+
+        await addDoc(collection(db, "artefatos"), {
+            nome,
+            descricao,
+            criadoEm: new Date()
+        });
+
+        alert("Artefato salvo na nuvem!");
+        document.getElementById("nome").value = "";
+        document.getElementById("descricao").value = "";
+
+    }catch(e){
+        console.error(e);
+        alert("Erro ao salvar artefato");
     }
-
-    const artefato = { nome, descricao };
-
-    let lista = JSON.parse(localStorage.getItem("artefatos_btf")) || [];
-    lista.push(artefato);
-    localStorage.setItem("artefatos_btf", JSON.stringify(lista));
-
-    alert("Artefato adicionado ao catálogo!");
-    document.getElementById("nome").value = "";
-    document.getElementById("descricao").value = "";
-}
+};
 </script>
 
 </body>

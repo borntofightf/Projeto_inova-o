@@ -63,21 +63,37 @@ p{
     </a>
 </div>
 
-<script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBls7v_X5_7EYXh4U3aYTTAT7RAOArDmjM",
+  authDomain: "catalogo-artefatos.firebaseapp.com",
+  projectId: "catalogo-artefatos",
+  storageBucket: "catalogo-artefatos.firebasestorage.app",
+  messagingSenderId: "399410630744",
+  appId: "1:399410630744:web:ee2d6b509ac2113199fa2d",
+  measurementId: "G-PSS0B119PP"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-const artefatos = JSON.parse(localStorage.getItem("artefatos_btf")) || [];
-const artefato = artefatos[id];
+const ref = doc(db, "artefatos", id);
+const snap = await getDoc(ref);
 
-if (!artefato) {
+if(snap.exists()){
+    document.getElementById("titulo").textContent = snap.data().nome;
+    document.getElementById("descricao").textContent = snap.data().descricao;
+}else{
     document.getElementById("titulo").textContent = "Artefato não encontrado";
-    document.getElementById("descricao").textContent = "Este artefato não existe ou foi removido.";
-} else {
-    document.getElementById("titulo").textContent = artefato.nome;
-    document.getElementById("descricao").textContent = artefato.descricao;
-}
+};
 </script>
+
 
 </body>
 </html>
