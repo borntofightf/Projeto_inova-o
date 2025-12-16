@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ResponsiveVoice -->
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=JTbwNlZ4"></script>
 
     <style>
         :root {
@@ -1092,8 +1094,26 @@
 
     <!-- SCRIPTS -->
     <script>
+        // Verificar se ResponsiveVoice está carregado
+        function checkResponsiveVoice() {
+            if (typeof responsiveVoice === 'undefined') {
+                console.warn('ResponsiveVoice não carregado. Verifique a chave da API.');
+                return false;
+            }
+            return true;
+        }
+
+        // Configurar voz padrão em português
+        if (typeof responsiveVoice !== 'undefined') {
+            responsiveVoice.setDefaultVoice("Portuguese Female");
+            responsiveVoice.enableWindowClickSync();
+        }
+
         // Sistema de avaliação por estrelas
         document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se ResponsiveVoice está funcionando
+            console.log('ResponsiveVoice carregado:', typeof responsiveVoice !== 'undefined');
+            
             // Carregar avaliações salvas
             document.querySelectorAll(".rating").forEach(rating => {
                 const id = rating.getAttribute("data-id");
@@ -1119,6 +1139,9 @@
                         
                         // Efeito de confetes
                         createConfetti();
+                        
+                        // Feedback de áudio
+                        readText(`Você avaliou com ${value} estrelas. Obrigado pela sua avaliação!`);
                     });
                     
                     star.addEventListener("mouseenter", e => {
@@ -1141,6 +1164,9 @@
             
             // Precarregar imagens
             preloadImages();
+            
+            // Adicionar event listeners para os botões de áudio
+            setupAudioButtons();
         });
 
         function highlightStars(rating, value) {
@@ -1149,6 +1175,27 @@
                 if (star.getAttribute("data-star") <= value) {
                     star.classList.add("selected");
                 }
+            });
+        }
+
+        // Configurar botões de áudio
+        function setupAudioButtons() {
+            document.querySelectorAll('.audio-btn-small').forEach(btn => {
+                btn.addEventListener('mouseenter', function() {
+                    if (!checkResponsiveVoice()) return;
+                    
+                    // Pequeno feedback ao passar o mouse
+                    this.style.transform = 'scale(1.05)';
+                });
+                
+                btn.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+                
+                btn.addEventListener('click', function(e) {
+                    // Manter o comportamento padrão se houver onclick
+                    if (this.getAttribute('onclick')) return;
+                });
             });
         }
 
@@ -1228,49 +1275,95 @@
             }
         }
 
-        // Funções de áudio
-        let synth = window.speechSynthesis;
+        // Funções de áudio usando ResponsiveVoice
         let isSpeaking = false;
+        let currentUtterance = null;
 
         function readText(text) {
-            if (isSpeaking) {
-                synth.cancel();
-                isSpeaking = false;
+            if (!checkResponsiveVoice()) {
+                alert('Sistema de áudio não disponível no momento.');
                 return;
             }
             
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = "pt-BR";
-            utter.rate = 1;
-            utter.pitch = 1;
-            
-            utter.onstart = () => {
-                isSpeaking = true;
-                // Adicionar efeito visual durante a fala
-                document.querySelectorAll('.audio-btn-small').forEach(btn => {
-                    btn.style.boxShadow = '0 0 15px rgba(165, 91, 52, 0.5)';
-                });
-            };
-            
-            utter.onend = () => {
+            if (isSpeaking) {
+                responsiveVoice.cancel();
                 isSpeaking = false;
-                document.querySelectorAll('.audio-btn-small').forEach(btn => {
-                    btn.style.boxShadow = '';
-                });
+                removeAudioEffects();
+                return;
+            }
+            
+            // Configurações da voz
+            const options = {
+                rate: 1.0,    // velocidade
+                pitch: 1.0,   // tom
+                volume: 1.0,  // volume
+                onstart: function() {
+                    isSpeaking = true;
+                    addAudioEffects();
+                },
+                onend: function() {
+                    isSpeaking = false;
+                    removeAudioEffects();
+                },
+                onerror: function() {
+                    isSpeaking = false;
+                    removeAudioEffects();
+                    alert('Erro ao reproduzir áudio. Tente novamente.');
+                }
             };
             
-            utter.onerror = () => {
+            try {
+                // Usar voz em português brasileiro
+                responsiveVoice.speak(text, "Portuguese Female", options);
+            } catch (error) {
+                console.error('Erro ao reproduzir áudio:', error);
                 isSpeaking = false;
-                document.querySelectorAll('.audio-btn-small').forEach(btn => {
-                    btn.style.boxShadow = '';
-                });
-            };
+                removeAudioEffects();
+                alert('Erro ao reproduzir áudio. Verifique sua conexão.');
+            }
+        }
+
+        function addAudioEffects() {
+            // Adicionar efeito visual durante a fala
+            document.querySelectorAll('.audio-btn-small').forEach(btn => {
+                btn.style.boxShadow = '0 0 15px rgba(165, 91, 52, 0.5)';
+                btn.style.animation = 'pulse 1s infinite';
+                btn.innerHTML = '<i class="fas fa-volume-up"></i> Parar';
+            });
             
-            synth.speak(utter);
+            // Adicionar efeito no título
+            const title = document.querySelector('.card-title h2');
+            if (title) {
+                title.style.textShadow = '0 0 10px rgba(165, 91, 52, 0.3)';
+            }
+        }
+
+        function removeAudioEffects() {
+            // Remover efeitos visuais
+            document.querySelectorAll('.audio-btn-small').forEach(btn => {
+                btn.style.boxShadow = '';
+                btn.style.animation = '';
+                btn.innerHTML = '<i class="fas fa-volume-up"></i> Ouvir';
+            });
+            
+            // Remover efeito do título
+            const title = document.querySelector('.card-title h2');
+            if (title) {
+                title.style.textShadow = '';
+            }
+        }
+
+        // Função para parar toda a fala
+        function stopAllSpeech() {
+            if (checkResponsiveVoice()) {
+                responsiveVoice.cancel();
+                isSpeaking = false;
+                removeAudioEffects();
+            }
         }
 
         function ouvirVoltarMenu() {
-            readText("Voltar para o menu principal");
+            readText("Botão: Voltar para o menu principal");
         }
 
         // Scroll suave para o topo
@@ -1286,6 +1379,9 @@
             setTimeout(() => {
                 btn.style.transform = '';
             }, 300);
+            
+            // Parar qualquer fala em andamento
+            stopAllSpeech();
         }
 
         // Mostrar/ocultar botão flutuante
@@ -1326,6 +1422,11 @@
                     btn.style.transform = 'translateY(0)';
                 }, 1000 + (index * 200));
             });
+            
+            // Saudação inicial
+            setTimeout(() => {
+                readText("Bem-vindo ao catálogo interativo da Urna Funerária Marajoara. Explore as informações e use os botões de áudio para ouvir o conteúdo.");
+            }, 4000);
         });
 
         // Efeitos de hover nas linhas de informação
@@ -1403,6 +1504,18 @@
                 animateConfetti();
             }
         }
+
+        // Adicionar evento para parar áudio ao sair da página
+        window.addEventListener('beforeunload', function() {
+            stopAllSpeech();
+        });
+
+        // Adicionar evento para parar áudio ao clicar em links
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                stopAllSpeech();
+            });
+        });
     </script>
 
     <!-- VLibras -->

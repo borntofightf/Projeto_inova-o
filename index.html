@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Born To Fight Robotics – Arqueologia Amazônica Digital</title>
-
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=JTbwNlZ4"></script>
     <!-- Fontes temáticas para arqueologia -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ResponsiveVoice -->
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=YOUR_API_KEY"></script>
 
     <style>
         :root {
@@ -1209,6 +1212,12 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
 
     <!-- SCRIPTS CORRIGIDOS -->
     <script>
+        // IMPORTANTE: Você precisa substituir 'YOUR_API_KEY' pelo seu chave da ResponsiveVoice
+        // Configure a ResponsiveVoice
+        if (typeof responsiveVoice !== 'undefined') {
+            responsiveVoice.setDefaultVoice("Portuguese Female");
+        }
+
         // Controle do dropdown - VERSÃO CORRIGIDA
         let dropdownOpen = false;
         const catalogBtn = document.getElementById('catalogoBtn');
@@ -1307,68 +1316,76 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
             // Testar se os elementos existem
             console.log('Catalog btn existe:', !!catalogBtn);
             console.log('Catalog menu existe:', !!catalogMenu);
+            
+            // Verificar se ResponsiveVoice está carregado
+            if (typeof responsiveVoice !== 'undefined') {
+                console.log('ResponsiveVoice carregado com sucesso');
+            } else {
+                console.warn('ResponsiveVoice não está carregado. Verifique a chave da API.');
+            }
         });
 
-        // Funções de áudio
-        let synth = window.speechSynthesis;
+        // Funções de áudio usando ResponsiveVoice
         let isSpeaking = false;
 
         function readSection(id) {
-            if (isSpeaking) {
-                synth.cancel();
-                isSpeaking = false;
+            const textElement = document.getElementById(id);
+            if (!textElement) {
+                console.error('Elemento não encontrado:', id);
                 return;
             }
             
-            const text = document.getElementById(id).textContent;
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = "pt-BR";
-            utter.rate = 1;
-            utter.pitch = 1;
-            
-            utter.onstart = () => {
-                isSpeaking = true;
-                console.log('Áudio iniciado:', id);
-            };
-            utter.onend = () => {
-                isSpeaking = false;
-                console.log('Áudio finalizado');
-            };
-            utter.onerror = () => {
-                isSpeaking = false;
-                console.log('Erro no áudio');
-            };
-            
-            synth.speak(utter);
+            const text = textElement.textContent;
+            readText(text);
         }
 
         function readText(text) {
             console.log('Lendo texto:', text.substring(0, 30) + '...');
             
-            if (isSpeaking) {
-                synth.cancel();
-                isSpeaking = false;
+            if (typeof responsiveVoice === 'undefined') {
+                alert('Sistema de áudio não está disponível. Verifique a conexão.');
+                return;
             }
             
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = "pt-BR";
-            utter.rate = 1;
-            utter.pitch = 1;
+            if (isSpeaking) {
+                responsiveVoice.cancel();
+                isSpeaking = false;
+                return;
+            }
             
-            utter.onstart = () => {
+            // Configurações da voz em português brasileiro
+            const options = {
+                rate: 1.0,    // velocidade
+                pitch: 1.0,   // tom
+                volume: 1.0   // volume
+            };
+            
+            try {
+                responsiveVoice.speak(text, "Portuguese Female", options);
                 isSpeaking = true;
-                console.log('Áudio do dropdown iniciado');
-            };
-            utter.onend = () => {
+                
+                // Detectar quando a fala termina
+                const checkStatus = setInterval(() => {
+                    if (!responsiveVoice.isPlaying()) {
+                        isSpeaking = false;
+                        clearInterval(checkStatus);
+                        console.log('Áudio finalizado');
+                    }
+                }, 500);
+                
+            } catch (error) {
+                console.error('Erro ao reproduzir áudio:', error);
                 isSpeaking = false;
-                console.log('Áudio do dropdown finalizado');
-            };
-            utter.onerror = () => {
+                alert('Erro ao reproduzir áudio. Tente novamente.');
+            }
+        }
+
+        // Função para parar todas as falas
+        function stopAllSpeech() {
+            if (typeof responsiveVoice !== 'undefined') {
+                responsiveVoice.cancel();
                 isSpeaking = false;
-                console.log('Erro no áudio do dropdown');
-            };
-            
-            synth.speak(utter);
+            }
         }
 
         // Scroll suave para o topo
@@ -1429,6 +1446,8 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
         document.querySelectorAll('.catalog-item a').forEach(link => {
             link.addEventListener('click', function(e) {
                 console.log('Link do catálogo clicado:', this.href);
+                // Parar qualquer áudio em andamento
+                stopAllSpeech();
                 // Não fechar imediatamente para permitir a navegação
                 setTimeout(() => {
                     if (dropdownOpen) {
