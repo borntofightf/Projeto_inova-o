@@ -983,6 +983,9 @@
                 
                 <div class="dropdown" id="catalogMenu">
                     <h3><i class="fas fa-digging"></i> Inventário de Artefatos</h3>
+                    <!-- ARTEFATOS ADICIONADOS AUTOMATICAMENTE -->
+                <div id="catalogoDinamico"></div>
+
                     
                     <div class="catalog-item">
                         <a href="index1.html">
@@ -1043,6 +1046,11 @@
                <i class="fas fa-tablets"></i>
                Baixar Documentação
             </a>
+            <a href="adicionar-artefatos.html" class="nav-btn">
+                <i class="fas fa-plus-circle"></i>
+                Novos Artefatos
+</a>
+
         </div>
     </header>
 
@@ -1382,6 +1390,32 @@
                 }, 100);
             });
         });
+        
+        function carregarArtefatos() {
+    const container = document.getElementById("catalogoDinamico");
+    if (!container) return;
+
+    const artefatos = JSON.parse(localStorage.getItem("artefatos_btf")) || [];
+
+    artefatos.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "catalog-item";
+
+        div.innerHTML = `
+            <a href="artefato.html?id=${index}">
+                <i class="fas fa-cube"></i>
+                ${item.nome}
+            </a>
+            <button class="audio-btn" onclick="readText('${item.nome}')">
+                <i class="fas fa-volume-up"></i> Ouvir
+            </button>
+        `;
+
+        container.appendChild(div);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", carregarArtefatos);
     </script>
 
     <!-- VLibras -->

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Novo Artefato</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+body{
+    font-family: 'Inter', sans-serif;
+    background: #f5eedf;
+    padding: 40px;
+    color: #2c1810;
+}
+.box{
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+h1{
+    font-family: 'Cinzel', serif;
+    color: #8c4a32;
+}
+input, textarea{
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+button{
+    background: #8c4a32;
+    color: #fff;
+    border: none;
+    padding: 14px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+button:hover{
+    background: #a8423f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h1><i class="fas fa-plus"></i> Novo Artefato</h1>
+
+    <input id="nome" placeholder="Nome do artefato">
+    <textarea id="descricao" placeholder="Descrição do artefato"></textarea>
+
+    <button onclick="salvarArtefato()">
+        <i class="fas fa-save"></i> Salvar Artefato
+    </button>
+</div>
+
+<script>
+function salvarArtefato(){
+    const nome = document.getElementById("nome").value;
+    const descricao = document.getElementById("descricao").value;
+
+    if(!nome || !descricao){
+        alert("Preencha todos os campos");
+        return;
+    }
+
+    const artefato = { nome, descricao };
+
+    let lista = JSON.parse(localStorage.getItem("artefatos_btf")) || [];
+    lista.push(artefato);
+    localStorage.setItem("artefatos_btf", JSON.stringify(lista));
+
+    alert("Artefato adicionado ao catálogo!");
+    document.getElementById("nome").value = "";
+    document.getElementById("descricao").value = "";
+}
+</script>
+
+</body>
+</html>
