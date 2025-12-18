@@ -257,6 +257,191 @@
             box-shadow: 0 0 15px rgba(165, 91, 52, 0.5);
         }
 
+        /* NOVA SEÇÃO: RECURSOS MULTIMÍDIA */
+        .multimedia-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            width: 100%;
+            max-width: 1300px;
+            animation: slideInUp 0.8s ease-out 0.6s both;
+        }
+
+        .multimedia-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .multimedia-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .multimedia-title i {
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .multimedia-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: linear-gradient(135deg, rgba(165, 91, 52, 0.05) 0%, rgba(44, 85, 48, 0.05) 100%);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: var(--transition);
+            transform-origin: left;
+        }
+
+        .resource-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .resource-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            margin-bottom: 10px;
+            transition: var(--transition);
+        }
+
+        .resource-card:hover .resource-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .resource-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            color: var(--primary-dark);
+            margin-bottom: 10px;
+        }
+
+        .resource-content p {
+            color: var(--text-light);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .resource-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .resource-btn {
+            padding: 10px 20px;
+            background: var(--white);
+            color: var(--primary-dark);
+            border: 2px solid var(--primary-light);
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        .resource-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .resource-btn i {
+            font-size: 16px;
+        }
+
+        .btn-photos {
+            border-color: #4CAF50;
+            color: #2E7D32;
+        }
+
+        .btn-photos:hover {
+            background: #4CAF50;
+        }
+
+        .btn-videos {
+            border-color: #FF5722;
+            color: #D84315;
+        }
+
+        .btn-videos:hover {
+            background: #FF5722;
+        }
+
+        .btn-documentary {
+            border-color: #2196F3;
+            color: #1565C0;
+        }
+
+        .btn-documentary:hover {
+            background: #2196F3;
+        }
+
+        .btn-article {
+            border-color: #9C27B0;
+            color: #7B1FA2;
+        }
+
+        .btn-article:hover {
+            background: #9C27B0;
+        }
+
         /* GRADE DE CARDS */
         .grid {
             display: grid;
@@ -820,6 +1005,10 @@
                 padding: 20px;
             }
             
+            .multimedia-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -854,6 +1043,18 @@
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
+            }
+            
+            .multimedia-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resource-buttons {
+                flex-direction: column;
+            }
+            
+            .resource-btn {
+                min-width: 100%;
             }
             
             .info-row {
@@ -908,6 +1109,16 @@
                 width: 50px;
                 height: 50px;
                 font-size: 20px;
+            }
+            
+            .multimedia-title {
+                font-size: 20px;
+            }
+            
+            .resource-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
             }
 
             .audio-controls {
@@ -1109,6 +1320,118 @@
         </div>
     </div>
 
+    <!-- NOVA SEÇÃO: RECURSOS MULTIMÍDIA -->
+    <div class="multimedia-section">
+        <div class="multimedia-header">
+            <div class="multimedia-title">
+                <i class="fas fa-photo-video"></i>
+                <span>Recursos Multimídia</span>
+            </div>
+            <button class="audio-btn-small" onclick="readText('Seção de recursos multimídia com fotos, vídeos, documentários e artigos sobre cerâmica amazônica.', this)">
+                <i class="fas fa-volume-up"></i>
+                Ouvir Seção
+            </button>
+        </div>
+        
+        <div class="multimedia-grid">
+            <!-- FOTOS -->
+            <div class="resource-card">
+                <div class="resource-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Álbum de Fotos</h3>
+                    <p>Explore nossa coleção completa de imagens em alta resolução da Estatueta Tapajônica 2 e artefatos da cultura Tapajó.</p>
+                </div>
+                <div class="resource-buttons">
+                    <a href="https://drive.google.com/drive/folders/13zxAwO8_iaNScqZiBGSc5VtGzKNbf-Yh" 
+                       target="_blank" 
+                       class="resource-btn btn-photos"
+                       onclick="trackClick('photos_tapajonica2')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Acessar Álbum
+                    </a>
+                    <button class="resource-btn btn-photos" onclick="readText('Álbum de fotos da Estatueta Tapajônica 2. Clique no botão para acessar.', this)">
+                        <i class="fas fa-volume-up"></i>
+                        Ouvir Descrição
+                    </button>
+                </div>
+            </div>
+            
+            <!-- VÍDEOS -->
+            <div class="resource-card">
+                <div class="resource-icon">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Vídeos Educativos</h3>
+                    <p>Assista a vídeos sobre a cultura Tapajó, técnicas de produção e importância cultural das estatuetas.</p>
+                </div>
+                <div class="resource-buttons">
+                    <a href="https://www.youtube.com/watch?v=VYXv7tjF__8" 
+                       target="_blank" 
+                       class="resource-btn btn-videos"
+                       onclick="trackClick('video_tapajonica2')">
+                        <i class="fab fa-youtube"></i>
+                        Vídeo Educativo
+                    </a>
+                    <button class="resource-btn btn-videos" onclick="readText('Vídeo educativo sobre a Estatueta Tapajônica 2 e cultura Tapajó. Clique para assistir.', this)">
+                        <i class="fas fa-volume-up"></i>
+                        Ouvir Descrição
+                    </button>
+                </div>
+            </div>
+            
+            <!-- DOCUMENTÁRIOS -->
+            <div class="resource-card">
+                <div class="resource-icon">
+                    <i class="fas fa-film"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Documentários</h3>
+                    <p>Documentários completos sobre a cultura Tapajó, escavações arqueológicas e preservação cultural.</p>
+                </div>
+                <div class="resource-buttons">
+                    <a href="https://www.youtube.com/watch?v=8lk_MdN8kbQ" 
+                       target="_blank" 
+                       class="resource-btn btn-documentary"
+                       onclick="trackClick('documentary_tapajonica2')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Assistir Documentário
+                    </a>
+                    <button class="resource-btn btn-documentary" onclick="readText('Documentário completo sobre a cultura Tapajó e escavações arqueológicas.', this)">
+                        <i class="fas fa-volume-up"></i>
+                        Ouvir Descrição
+                    </button>
+                </div>
+            </div>
+            
+            <!-- ARTIGOS -->
+            <div class="resource-card">
+                <div class="resource-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Artigos Científicos</h3>
+                    <p>Artigos acadêmicos e pesquisas sobre cerâmica Tapajônica, publicações especializadas e estudos.</p>
+                </div>
+                <div class="resource-buttons">
+                    <a href="https://www.scielo.br/j/bgoeldi/a/VpNYcwXrPTyFV5q6pqLC8bf/?format=pdf&lang=pt" 
+                       target="_blank" 
+                       class="resource-btn btn-article"
+                       onclick="trackClick('article_tapajonica2')">
+                        <i class="fas fa-external-link-alt"></i>
+                        Ler Artigo
+                    </a>
+                    <button class="resource-btn btn-article" onclick="readText('Artigo científico sobre cerâmica Tapajônica publicado em revista especializada.', this)">
+                        <i class="fas fa-volume-up"></i>
+                        Ouvir Descrição
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- RODAPÉ -->
     <div class="footer">
         <div class="footer-content">
@@ -1204,6 +1527,9 @@
                         
                         // Efeito de confetes
                         createConfetti();
+                        
+                        // Feedback de áudio
+                        readText(`Você avaliou com ${value} estrelas. Obrigado pela sua avaliação!`, null);
                     });
                     
                     star.addEventListener("mouseenter", e => {
@@ -1332,6 +1658,31 @@
         function hideAudioControls() {
             const controls = document.getElementById('audioControls');
             controls.classList.remove('show');
+        }
+
+        // Rastrear cliques em recursos (para análise)
+        function trackClick(resourceType) {
+            console.log(`Recurso clicado: ${resourceType}`);
+            // Aqui você pode adicionar código para Google Analytics ou outro sistema de tracking
+            const clicks = JSON.parse(localStorage.getItem('resource_clicks') || '{}');
+            clicks[resourceType] = (clicks[resourceType] || 0) + 1;
+            localStorage.setItem('resource_clicks', JSON.stringify(clicks));
+            
+            // Feedback de áudio
+            readText(`Abrindo ${getResourceName(resourceType)} em nova aba.`, null);
+            
+            // Parar áudio após 2 segundos para não interferir com a navegação
+            setTimeout(stopAllAudio, 2000);
+        }
+
+        function getResourceName(type) {
+            const names = {
+                'photos_tapajonica2': 'álbum de fotos',
+                'video_tapajonica2': 'vídeo educativo',
+                'documentary_tapajonica2': 'documentário completo',
+                'article_tapajonica2': 'artigo científico'
+            };
+            return names[type] || 'recurso';
         }
 
         // Funções para controle da imagem
@@ -1520,7 +1871,9 @@
                     if (opacity > 0) {
                         requestAnimationFrame(animateConfetti);
                     } else {
-                        document.body.removeChild(confetti);
+                        if (confetti.parentNode) {
+                            document.body.removeChild(confetti);
+                        }
                     }
                 };
                 

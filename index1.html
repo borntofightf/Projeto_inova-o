@@ -255,283 +255,6 @@
             transform: translateY(-2px);
         }
 
-        /* NOVA SEÇÃO: TABELA DE CRITÉRIOS */
-        .criteria-section {
-            margin: 40px 0 30px 0;
-            padding: 30px;
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-md);
-            width: 100%;
-            max-width: 1300px;
-            animation: slideInUp 0.8s ease-out 0.6s both;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .criteria-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-        }
-
-        .criteria-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--secondary);
-        }
-
-        .criteria-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--secondary);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .criteria-title i {
-            color: var(--primary);
-            font-size: 28px;
-        }
-
-        .scale-info {
-            background: rgba(44, 85, 48, 0.1);
-            padding: 15px;
-            border-radius: var(--radius);
-            margin-bottom: 25px;
-            border-left: 4px solid var(--secondary);
-        }
-
-        .scale-info h4 {
-            color: var(--secondary);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .scale-levels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .scale-level {
-            text-align: center;
-            padding: 8px 15px;
-            background: var(--light-beige);
-            border-radius: 8px;
-            flex: 1;
-            min-width: 120px;
-        }
-
-        .scale-level span {
-            font-weight: 600;
-            color: var(--secondary);
-        }
-
-        .criteria-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .criteria-table thead {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary-dark) 100%);
-            color: white;
-        }
-
-        .criteria-table th {
-            padding: 18px 15px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .criteria-table tbody tr {
-            border-bottom: 1px solid rgba(165, 91, 52, 0.1);
-            transition: var(--transition);
-        }
-
-        .criteria-table tbody tr:hover {
-            background: rgba(165, 91, 52, 0.03);
-        }
-
-        .criteria-table td {
-            padding: 16px 15px;
-            vertical-align: top;
-        }
-
-        .criteria-table td:first-child {
-            font-weight: 600;
-            color: var(--primary-dark);
-            width: 25%;
-        }
-
-        .criteria-table td:nth-child(2) {
-            width: 55%;
-            color: var(--text-dark);
-        }
-
-        .criteria-table td:last-child {
-            width: 20%;
-            text-align: center;
-        }
-
-        .rating-badge {
-            display: inline-block;
-            padding: 8px 15px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 18px;
-            min-width: 50px;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-
-        .criteria-table tbody tr:hover .rating-badge {
-            transform: scale(1.1);
-            box-shadow: var(--shadow-md);
-        }
-
-        .final-score-container {
-            background: linear-gradient(135deg, rgba(44, 85, 48, 0.05) 0%, rgba(165, 91, 52, 0.05) 100%);
-            padding: 25px;
-            border-radius: var(--radius-lg);
-            border: 2px solid var(--secondary);
-            margin-top: 30px;
-        }
-
-        .final-score-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .final-score-title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--secondary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .score-display {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .total-score {
-            font-size: 48px;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 5px;
-        }
-
-        .max-score {
-            color: var(--text-light);
-            font-size: 16px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 20px;
-            background: var(--light-beige);
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 15px 0;
-            position: relative;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-light), var(--primary));
-            border-radius: 10px;
-            transition: width 1s ease-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress-fill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: shine 2s infinite;
-        }
-
-        .score-interpretation {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .interpretation-item {
-            padding: 15px;
-            border-radius: var(--radius);
-            text-align: center;
-            transition: var(--transition);
-            border: 2px solid transparent;
-        }
-
-        .interpretation-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .interpretation-item h5 {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .interpretation-item p {
-            font-size: 14px;
-            color: var(--text-light);
-        }
-
-        .item-highly-recommended {
-            background: rgba(76, 175, 80, 0.1);
-            border-color: #4CAF50;
-        }
-
-        .item-recommended {
-            background: rgba(33, 150, 243, 0.1);
-            border-color: #2196F3;
-        }
-
-        .item-limited-use {
-            background: rgba(255, 193, 7, 0.1);
-            border-color: #FFC107;
-        }
-
-        .item-not-recommended {
-            background: rgba(244, 67, 54, 0.1);
-            border-color: #F44336;
-        }
-
         /* NOVA SEÇÃO: RECURSOS MULTIMÍDIA */
         .multimedia-section {
             margin: 30px 0;
@@ -1241,19 +964,6 @@
                 grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             }
             
-            .criteria-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .scale-levels {
-                flex-direction: column;
-            }
-            
-            .score-interpretation {
-                grid-template-columns: 1fr;
-            }
-            
             .footer-content {
                 flex-direction: column;
                 text-align: center;
@@ -1318,17 +1028,6 @@
             .resource-btn {
                 min-width: 100%;
             }
-            
-            .criteria-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .criteria-table td, .criteria-table th {
-                padding: 12px 10px;
-                font-size: 14px;
-            }
         }
 
         @media (max-width: 480px) {
@@ -1356,7 +1055,7 @@
                 font-size: 20px;
             }
             
-            .multimedia-title, .criteria-title {
+            .multimedia-title {
                 font-size: 20px;
             }
             
@@ -1364,10 +1063,6 @@
                 width: 60px;
                 height: 60px;
                 font-size: 24px;
-            }
-            
-            .total-score {
-                font-size: 36px;
             }
         }
 
@@ -1566,110 +1261,6 @@
                         e a pintura encarnada refletem o estilo clássico marajoara, que influenciou
                         toda a região amazônica.
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- NOVA SEÇÃO: CRITÉRIOS DE AVALIAÇÃO -->
-    <div class="criteria-section">
-        <div class="criteria-header">
-            <div class="criteria-title">
-                <i class="fas fa-clipboard-check"></i>
-                <span>Critérios de Avaliação – Por que escolhemos essa peça?</span>
-            </div>
-            <button class="audio-btn-small" onclick="readText('Tabela de critérios de avaliação para escolhemos essa peça arqueológica. Escala de 1 a 5.')">
-                <i class="fas fa-volume-up"></i>
-                Ouvir Tabela
-            </button>
-        </div>
-        
-        <div class="scale-info">
-            <h4><i class="fas fa-ruler"></i> Escala de Avaliação:</h4>
-            <p>1 = Muito baixo | 2 = Baixo | 3 = Médio | 4 = Alto | 5 = Muito alto</p>
-            <div class="scale-levels">
-                <div class="scale-level"><span>1:</span> Muito baixo</div>
-                <div class="scale-level"><span>2:</span> Baixo</div>
-                <div class="scale-level"><span>3:</span> Médio</div>
-                <div class="scale-level"><span>4:</span> Alto</div>
-                <div class="scale-level"><span>5:</span> Muito alto</div>
-            </div>
-        </div>
-        
-        <table class="criteria-table">
-            <thead>
-                <tr>
-                    <th>Critério</th>
-                    <th>O que é avaliado</th>
-                    <th>Nota (1–5)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Fidelidade ao original</td>
-                    <td>Semelhança com a peça real (forma, tamanho, detalhes)</td>
-                    <td><span class="rating-badge">4</span></td>
-                </tr>
-                <tr>
-                    <td>Valor educativo</td>
-                    <td>Capacidade de explicar o contexto histórico e cultural</td>
-                    <td><span class="rating-badge">4</span></td>
-                </tr>
-                <tr>
-                    <td>Qualidade da impressão 3D</td>
-                    <td>Acabamento, resistência e definição</td>
-                    <td><span class="rating-badge">4</span></td>
-                </tr>
-                <tr>
-                    <td>Acessibilidade e interação</td>
-                    <td>Possibilidade de toque e inclusão do público</td>
-                    <td><span class="rating-badge">4</span></td>
-                </tr>
-                <tr>
-                    <td>Adequação à exposição</td>
-                    <td>Coerência com o tema e proposta do evento</td>
-                    <td><span class="rating-badge">3</span></td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div class="final-score-container">
-            <div class="final-score-header">
-                <div class="final-score-title">
-                    <i class="fas fa-chart-bar"></i>
-                    <span>Pontuação Final</span>
-                </div>
-                <button class="audio-btn-small" onclick="readScoreDetails()">
-                    <i class="fas fa-volume-up"></i>
-                    Ouvir Pontuação
-                </button>
-            </div>
-            
-            <div class="score-display">
-                <div class="total-score" id="totalScore">19</div>
-                <div class="max-score">Máximo: 25 pontos</div>
-            </div>
-            
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            
-            <div class="score-interpretation">
-                <div class="interpretation-item item-highly-recommended">
-                    <h5>21–25 pontos</h5>
-                    <p>Altamente recomendada para exposição</p>
-                </div>
-                <div class="interpretation-item item-recommended">
-                    <h5>16–20 pontos</h5>
-                    <p>Recomendada</p>
-                </div>
-                <div class="interpretation-item item-limited-use">
-                    <h5>11–15 pontos</h5>
-                    <p>Uso limitado</p>
-                </div>
-                <div class="interpretation-item item-not-recommended">
-                    <h5>Abaixo de 11 pontos</h5>
-                    <p>Não recomendada</p>
                 </div>
             </div>
         </div>
@@ -1900,9 +1491,6 @@
                     });
                 });
             });
-
-            // Inicializar tabela de critérios
-            initCriteriaTable();
             
             // Detectar proporção da imagem
             updateImageInfo();
@@ -1933,78 +1521,7 @@
                 }
             });
         }
-
-        // Inicializar tabela de critérios
-        function initCriteriaTable() {
-            const scores = [4, 4, 4, 4, 3]; // Notas da tabela
-            const totalScore = scores.reduce((a, b) => a + b, 0);
-            const maxScore = 25;
-            const percentage = (totalScore / maxScore) * 100;
-            
-            // Atualizar pontuação total
-            document.getElementById('totalScore').textContent = totalScore;
-            
-            // Atualizar barra de progresso
-            const progressFill = document.getElementById('progressFill');
-            progressFill.style.width = `${percentage}%`;
-            progressFill.style.setProperty('--progress-width', `${percentage}%`);
-            
-            // Animar barra de progresso
-            setTimeout(() => {
-                progressFill.style.animation = 'progressFill 1.5s ease-out forwards';
-            }, 500);
-            
-            // Destacar categoria correspondente
-            highlightScoreCategory(totalScore);
-        }
         
-        function highlightScoreCategory(score) {
-            // Remover destaques anteriores
-            document.querySelectorAll('.interpretation-item').forEach(item => {
-                item.style.boxShadow = 'none';
-                item.style.transform = 'none';
-            });
-            
-            // Destacar categoria correspondente
-            let categoryClass = '';
-            if (score >= 21) {
-                categoryClass = '.item-highly-recommended';
-            } else if (score >= 16) {
-                categoryClass = '.item-recommended';
-            } else if (score >= 11) {
-                categoryClass = '.item-limited-use';
-            } else {
-                categoryClass = '.item-not-recommended';
-            }
-            
-            const categoryItem = document.querySelector(categoryClass);
-            if (categoryItem) {
-                categoryItem.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
-                categoryItem.style.transform = 'translateY(-8px)';
-                
-                // Pulsar a categoria
-                setTimeout(() => {
-                    categoryItem.style.animation = 'pulse 2s infinite';
-                }, 1000);
-            }
-        }
-        
-        // Função para ler detalhes da pontuação
-        function readScoreDetails() {
-            const scores = [4, 4, 4, 4, 3];
-            const totalScore = scores.reduce((a, b) => a + b, 0);
-            
-            const text = `Pontuação total: ${totalScore} pontos de 25. ` +
-                        `Critérios avaliados: Fidelidade ao original: 4 pontos. ` +
-                        `Valor educativo: 4 pontos. ` +
-                        `Qualidade da impressão 3D: 4 pontos. ` +
-                        `Acessibilidade e interação: 4 pontos. ` +
-                        `Adequação à exposição: 3 pontos. ` +
-                        `Classificação: Recomendada para exposição.`;
-            
-            readText(text);
-        }
-
         // Configurar botões de áudio
         function setupAudioButtons() {
             document.querySelectorAll('.audio-btn-small').forEach(btn => {
@@ -2015,25 +1532,6 @@
                 
                 btn.addEventListener('mouseleave', function() {
                     this.style.transform = '';
-                });
-            });
-            
-            // Adicionar efeitos de hover às células da tabela
-            document.querySelectorAll('.criteria-table tbody tr').forEach(row => {
-                row.addEventListener('mouseenter', function() {
-                    const badge = this.querySelector('.rating-badge');
-                    if (badge) {
-                        badge.style.transform = 'scale(1.15)';
-                        badge.style.boxShadow = '0 6px 15px rgba(165, 91, 52, 0.3)';
-                    }
-                });
-                
-                row.addEventListener('mouseleave', function() {
-                    const badge = this.querySelector('.rating-badge');
-                    if (badge) {
-                        badge.style.transform = '';
-                        badge.style.boxShadow = '';
-                    }
                 });
             });
         }
@@ -2300,20 +1798,6 @@
                     btn.style.transform = 'translateY(0)';
                 }, 1000 + (index * 200));
             });
-            
-            // Animar entrada da tabela de critérios
-            setTimeout(() => {
-                document.querySelectorAll('.criteria-table tbody tr').forEach((row, index) => {
-                    row.style.opacity = '0';
-                    row.style.transform = 'translateX(-20px)';
-                    
-                    setTimeout(() => {
-                        row.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-                        row.style.opacity = '1';
-                        row.style.transform = 'translateX(0)';
-                    }, 800 + (index * 150));
-                });
-            }, 1000);
         });
 
         // Efeitos de hover nas linhas de informação
