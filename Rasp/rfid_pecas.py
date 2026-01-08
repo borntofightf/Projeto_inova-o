@@ -5,6 +5,7 @@ import webbrowser
 import time
 import sys
 import signal
+import subprocess
 
 print("Inicializando leitor NFC RC522...")
 
@@ -14,10 +15,10 @@ GPIO.setmode(GPIO.BOARD)
 
 # Dicionário de IDs e suas respectivas URLs
 CARTOES_CADASTRADOS = {
-    584183925461: "https://borntofightf.github.io/Projeto_inova-o/index4.html",
-    197057667619: "https://borntofightf.github.io/Projeto_inova-o/index5.html",
-    59448255196: "https://borntofightf.github.io/Projeto_inova-o/index1.html",
-    584192453749: "https://borntofightf.github.io/Projeto_inova-o/index3.html"
+    584183925461: "https://borntofightf.github.io/Relicario_digital_amazonico/index4.html",
+    197057667619: "https://borntofightf.github.io/Relicario_digital_amazonico/index5.html",
+    59448255196: "https://borntofightf.github.io/Relicario_digital_amazonico/index1.html",
+    584192453749: "https://borntofightf.github.io/Relicario_digital_amazonico/index3.html"
 }
 
 # Timeout handler
@@ -75,10 +76,20 @@ try:
                     print(f"→ ID RECONHECIDO! Abrindo página...")
                     print(f"→ URL: {url}")
                     try:
-                        webbrowser.open(url)
-                        print("→ Site aberto com sucesso!")
+                        # Abre Chromium com flags para permitir áudio/speech
+                        subprocess.Popen([
+                            'chromium-browser',
+                            '--autoplay-policy=no-user-gesture-required',
+                            '--enable-speech-api',
+                            '--enable-web-speech-api',
+                            '--kiosk',  # Modo tela cheia (opcional)
+                            url
+                        ])
+                        print("→ Site aberto com sucesso! 🔊")
                     except Exception as web_err:
-                        print(f"→ Erro ao abrir navegador: {web_err}")
+                        print(f"→ Erro ao abrir Chromium: {web_err}")
+                        print("→ Tentando com navegador padrão...")
+                        webbrowser.open(url)
                     time.sleep(3)
                 else:
                     print("→ ID NÃO RECONHECIDO!")
