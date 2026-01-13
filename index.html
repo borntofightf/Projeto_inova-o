@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Born To Fight Robotics – Arqueologia Amazônica Digital</title>
-    <script src="https://code.responsivevoice.org/responsivevoice.js?key=JTbwNlZ4"></script>
+    <!-- Favicon usando o Logo_Btf.png -->
+    <link rel="icon" type="image/png" href="images/Logo_Btf.png">
+    <link rel="apple-touch-icon" href="images/Logo_Btf.png">
     <!-- Fontes temáticas para arqueologia -->
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- ResponsiveVoice -->
-    <script src="https://code.responsivevoice.org/responsivevoice.js?key=YOUR_API_KEY"></script>
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=JTbwNlZ4"></script>
 
     <style>
         :root {
@@ -240,6 +242,109 @@
             gap: 20px;
             align-items: center;
             position: relative; /* Para dropdown se posicionar relativamente */
+        }
+
+        /* Seletor de idioma */
+        .language-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .language-btn {
+            padding: 12px 20px;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            font-weight: 600;
+            background: 
+                linear-gradient(135deg, var(--pedra) 0%, var(--texto-medio) 100%);
+            color: var(--branco-ossado);
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+            min-width: 130px;
+            justify-content: center;
+        }
+
+        .language-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: 
+                linear-gradient(135deg, var(--texto-medio) 0%, var(--pedra) 100%);
+        }
+
+        .language-btn i {
+            font-size: 16px;
+        }
+
+        .language-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: 
+                linear-gradient(135deg, var(--branco-ossado) 0%, var(--papiro) 100%);
+            box-shadow: var(--shadow-profunda);
+            border-radius: var(--radius);
+            padding: 15px;
+            min-width: 150px;
+            z-index: 9999;
+            animation: surgir 0.3s ease-out;
+            border: 2px solid var(--argila);
+            border-top: 6px solid var(--pedra);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .language-dropdown.show {
+            display: block;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: var(--transition);
+            background: rgba(140, 74, 50, 0.05);
+            border: 1px solid rgba(140, 74, 50, 0.15);
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--texto-escuro);
+        }
+
+        .language-option:hover {
+            background: rgba(140, 74, 50, 0.1);
+            transform: translateX(5px);
+            border-color: var(--terra-queimada);
+        }
+
+        .language-option.active {
+            background: rgba(140, 74, 50, 0.15);
+            border-color: var(--terra-queimada);
+            color: var(--terra-queimada);
+            font-weight: 600;
+        }
+
+        .language-flag {
+            width: 24px;
+            height: 16px;
+            border-radius: 2px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .nav-btn {
@@ -845,6 +950,16 @@
             .header-buttons {
                 flex-direction: column;
                 width: 100%;
+                gap: 15px;
+            }
+            
+            .language-selector {
+                width: 100%;
+            }
+            
+            .language-btn {
+                width: 100%;
+                justify-content: center;
             }
             
             .nav-btn, .download-btn {
@@ -852,7 +967,7 @@
                 justify-content: center;
             }
             
-            .dropdown {
+            .dropdown, .language-dropdown {
                 position: fixed;
                 top: 50%;
                 left: 50%;
@@ -897,7 +1012,7 @@
                 padding: 25px 20px;
             }
             
-            .dropdown {
+            .dropdown, .language-dropdown {
                 min-width: 280px;
                 padding: 20px;
             }
@@ -978,65 +1093,84 @@
         </div>
 
         <div class="header-buttons">
+            <!-- Seletor de idioma -->
+            <div class="language-selector">
+                <button class="language-btn" id="languageBtn">
+                    <i class="fas fa-globe-americas"></i>
+                    <span id="currentLanguage">Português</span>
+                </button>
+                <div class="language-dropdown" id="languageMenu">
+                    <div class="language-option active" data-lang="pt" data-voice="Portuguese Female">
+                        <div class="language-flag" style="background: linear-gradient(135deg, #006b3f 0%, #ffcc00 50%, #006b3f 50%);"></div>
+                        Português
+                    </div>
+                    <div class="language-option" data-lang="en" data-voice="US English Female">
+                        <div class="language-flag" style="background: linear-gradient(90deg, #b22234 0%, #b22234 30%, #ffffff 30%, #ffffff 70%, #b22234 70%, #b22234 100%); position: relative;">
+                            <div style="position: absolute; top: 0; left: 0; width: 30%; height: 100%; background: #3c3b6e;"></div>
+                        </div>
+                        English
+                    </div>
+                </div>
+            </div>
+
             <div class="dropdown-container">
                 <button class="nav-btn" id="catalogoBtn">
                     <i class="fas fa-scroll"></i>
-                    Catálogo de Artefatos
+                    <span data-i18n="catalog">Catálogo de Artefatos</span>
                 </button>
                 
                 <div class="dropdown" id="catalogMenu">
-                    <h3><i class="fas fa-digging"></i> Inventário de Artefatos</h3>
+                    <h3><i class="fas fa-digging"></i> <span data-i18n="inventory">Inventário de Artefatos</span></h3>
                     <!-- ARTEFATOS ADICIONADOS AUTOMATICAMENTE -->
-                <div id="catalogoDinamico"></div>
-
+                    <div id="catalogoDinamico"></div>
                     
                     <div class="catalog-item">
                         <a href="index1.html">
                             <i class="fas fa-urn"></i>
-                            Urna Funerária Marajoara
+                            <span data-i18n="urna_marajoara">Urna Funerária Marajoara</span>
                         </a>
-                        <button class="audio-btn" onclick="readText('Urna Funerária Marajoara')">
-                            <i class="fas fa-volume-up"></i> Ouvir
+                        <button class="audio-btn" onclick="readTextByLanguage('urna_marajoara')">
+                            <i class="fas fa-volume-up"></i> <span data-i18n="listen">Ouvir</span>
                         </button>
                     </div>
 
                     <div class="catalog-item">
                         <a href="index2.html">
                             <i class="fas fa-vase"></i>
-                            Urna Funerária Maracá
+                            <span data-i18n="urna_maraca">Urna Funerária Maracá</span>
                         </a>
-                        <button class="audio-btn" onclick="readText('Urna Funerária Maracá')">
-                            <i class="fas fa-volume-up"></i> Ouvir
+                        <button class="audio-btn" onclick="readTextByLanguage('urna_maraca')">
+                            <i class="fas fa-volume-up"></i> <span data-i18n="listen">Ouvir</span>
                         </button>
                     </div>
 
                     <div class="catalog-item">
                         <a href="index3.html">
                             <i class="fas fa-monument"></i>
-                            Estatueta Tapajônica 1
+                            <span data-i18n="estatueta_tapajonica1">Estatueta Tapajônica 1</span>
                         </a>
-                        <button class="audio-btn" onclick="readText('Estatueta Tapajônica número um')">
-                            <i class="fas fa-volume-up"></i> Ouvir
+                        <button class="audio-btn" onclick="readTextByLanguage('estatueta_tapajonica1')">
+                            <i class="fas fa-volume-up"></i> <span data-i18n="listen">Ouvir</span>
                         </button>
                     </div>
 
                     <div class="catalog-item">
                         <a href="index4.html">
                             <i class="fas fa-landmark"></i>
-                            Estatueta Tapajônica 2
+                            <span data-i18n="estatueta_tapajonica2">Estatueta Tapajônica 2</span>
                         </a>
-                        <button class="audio-btn" onclick="readText('Estatueta Tapajônica número dois')">
-                            <i class="fas fa-volume-up"></i> Ouvir
+                        <button class="audio-btn" onclick="readTextByLanguage('estatueta_tapajonica2')">
+                            <i class="fas fa-volume-up"></i> <span data-i18n="listen">Ouvir</span>
                         </button>
                     </div>
 
                     <div class="catalog-item">
                         <a href="index5.html">
                             <i class="fas fa-jug"></i>
-                            Vaso de Gargalo Tapajônico
+                            <span data-i18n="vaso_tapajonico">Vaso de Gargalo Tapajônico</span>
                         </a>
-                        <button class="audio-btn" onclick="readText('Vaso de Gargalo Tapajônico')">
-                            <i class="fas fa-volume-up"></i> Ouvir
+                        <button class="audio-btn" onclick="readTextByLanguage('vaso_tapajonico')">
+                            <i class="fas fa-volume-up"></i> <span data-i18n="listen">Ouvir</span>
                         </button>
                     </div>
                 </div>
@@ -1047,36 +1181,35 @@
                target="_blank"
                class="download-btn">
                <i class="fas fa-tablets"></i>
-               Baixar Documentação
+               <span data-i18n="download_docs">Baixar Documentação</span>
             </a>
             <a href="adicionar-artefatos.html" class="nav-btn">
                 <i class="fas fa-plus-circle"></i>
-                Novos Artefatos
-</a>
-
+                <span data-i18n="new_artifacts">Novos Artefatos</span>
+            </a>
         </div>
     </header>
 
     <div class="content">
         <div class="section-title">
-            <h1 id="secEquipe">Born To Fight – Arqueologia Digital</h1>
+            <h1 id="secEquipe" data-i18n="main_title">Born To Fight – Arqueologia Digital</h1>
             <button class="speech-btn" onclick="readSection('secEquipe')">
                 <i class="fas fa-volume-up"></i>
-                Ouvir Título
+                <span data-i18n="listen_title">Ouvir Título</span>
             </button>
         </div>
 
-        <p id="secIntro">
+        <p id="secIntro" data-i18n="mission_text">
             Somos a equipe Born To Fight, arqueólogos digitais dedicados à preservação e democratização do patrimônio amazônico. 
             Nossa missão é desenterrar histórias através da tecnologia, transformando cada artefato em uma experiência sensorial 
             e acessível que conecta passado, presente e futuro.
         </p>
         <button class="speech-btn" onclick="readSection('secIntro')">
             <i class="fas fa-volume-up"></i>
-            Ouvir Missão
+            <span data-i18n="listen_mission">Ouvir Missão</span>
         </button>
 
-        <p id="secProjeto">
+        <p id="secProjeto" data-i18n="project_text">
             Este projeto de arqueologia digital aplica tecnologias contemporâneas para facilitar o acesso ao patrimônio 
             arqueológico amazônico, criando uma ponte interativa entre a riqueza cultural ancestral e as possibilidades 
             educativas modernas. Utilizamos ferramentas digitais como documentação técnica avançada para registrar, 
@@ -1084,14 +1217,14 @@
         </p>
         <button class="speech-btn" onclick="readSection('secProjeto')">
             <i class="fas fa-volume-up"></i>
-            Ouvir Projeto
+            <span data-i18n="listen_project">Ouvir Projeto</span>
         </button>
 
         <div class="topics">
             <div class="topic-box" data-index="001">
                 <img src="images/rfid.jfif" alt="Sensor RFID RC522">
-                <h2 id="rfid">Sensor RFID RC522</h2>
-                <p id="rfidTxt">
+                <h2 id="rfid" data-i18n="rfid_title">Sensor RFID RC522</h2>
+                <p id="rfidTxt" data-i18n="rfid_text">
                     O sensor RFID atua como nosso scanner de campo digital, permitindo a identificação e ativação 
                     inteligente de conteúdos associados a cada réplica arqueológica. Tecnologia essencial para 
                     criar camadas de informação sobre os artefatos.
@@ -1099,19 +1232,19 @@
                 <div class="topic-buttons">
                     <button class="speech-btn" onclick="readSection('rfid')">
                         <i class="fas fa-volume-up"></i>
-                        Título
+                        <span data-i18n="title">Título</span>
                     </button>
                     <button class="speech-btn" onclick="readSection('rfidTxt')">
                         <i class="fas fa-volume-up"></i>
-                        Descrição
+                        <span data-i18n="description">Descrição</span>
                     </button>
                 </div>
             </div>
 
             <div class="topic-box" data-index="002">
                 <img src="images/raspbarry_pi4.jfif" alt="Raspeberry Pi 4">
-                <h2 id="rasp">Raspeberry Pi 4</h2>
-                <p id="raspTxt">
+                <h2 id="rasp" data-i18n="raspberry_title">Raspeberry Pi 4</h2>
+                <p id="raspTxt" data-i18n="raspberry_text">
                     Esta central processa dados arqueológicos em tempo real, funcionando como nosso laboratório 
                     de campo digital. Responsável por orquestrar todo o sistema interativo e garantir uma experiência 
                     fluida e imersiva no catálogo de artefatos.
@@ -1119,19 +1252,19 @@
                 <div class="topic-buttons">
                     <button class="speech-btn" onclick="readSection('rasp')">
                         <i class="fas fa-volume-up"></i>
-                        Título
+                        <span data-i18n="title">Título</span>
                     </button>
                     <button class="speech-btn" onclick="readSection('raspTxt')">
                         <i class="fas fa-volume-up"></i>
-                        Descrição
+                        <span data-i18n="description">Descrição</span>
                     </button>
                 </div>
             </div>
 
             <div class="topic-box" data-index="003">
                 <img src="images/Impressão_3D.png" alt="Impressão 3D">
-                <h2 id="imp">Impressão 3D</h2>
-                <p id="impTxt">
+                <h2 id="imp" data-i18n="printing_title">Impressão 3D</h2>
+                <p id="impTxt" data-i18n="printing_text">
                     Através da fabricação digital, produzimos réplicas fidedignas de artefatos arqueológicos, 
                     permitindo estudo tátil e inclusão sensorial. Esta abordagem traz acessibilidade concreta 
                     ao patrimônio, transformando visualização em experiência física.
@@ -1139,11 +1272,11 @@
                 <div class="topic-buttons">
                     <button class="speech-btn" onclick="readSection('imp')">
                         <i class="fas fa-volume-up"></i>
-                        Título
+                        <span data-i18n="title">Título</span>
                     </button>
                     <button class="speech-btn" onclick="readSection('impTxt')">
                         <i class="fas fa-volume-up"></i>
-                        Descrição
+                        <span data-i18n="description">Descrição</span>
                     </button>
                 </div>
             </div>
@@ -1152,9 +1285,9 @@
 
     <!-- RODAPÉ -->
     <footer>
-        <span>Expedições Digitais Realizadas:</span>
+        <span data-i18n="expeditions">Expedições Digitais Realizadas:</span>
         <div class="counter" id="visits">0</div>
-        <span>| Arqueologia com Propósito</span>
+        <span data-i18n="purpose">| Arqueologia com Propósito</span>
     </footer>
 
     <!-- BOTÃO FLUTUANTE -->
@@ -1198,8 +1331,8 @@ window.carregarArtefatos = async function(){
                 <i class="fas fa-cube"></i>
                 ${item.nome}
             </a>
-            <button class="audio-btn" onclick="readText('${item.nome}')">
-                <i class="fas fa-volume-up"></i> Ouvir
+            <button class="audio-btn" onclick="readTextByLanguage('${item.nome}')">
+                <i class="fas fa-volume-up"></i> <span data-i18n="listen">Ouvir</span>
             </button>
         `;
 
@@ -1218,7 +1351,170 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
             responsiveVoice.setDefaultVoice("Portuguese Female");
         }
 
-        // Controle do dropdown - VERSÃO CORRIGIDA
+        // ====== SISTEMA DE IDIOMAS ======
+        const translations = {
+            'pt': {
+                // Interface
+                'catalog': 'Catálogo de Artefatos',
+                'inventory': 'Inventário de Artefatos',
+                'download_docs': 'Baixar Documentação',
+                'new_artifacts': 'Novos Artefatos',
+                'listen': 'Ouvir',
+                'listen_title': 'Ouvir Título',
+                'listen_mission': 'Ouvir Missão',
+                'listen_project': 'Ouvir Projeto',
+                'title': 'Título',
+                'description': 'Descrição',
+                'expeditions': 'Expedições Digitais Realizadas:',
+                'purpose': '| Arqueologia com Propósito',
+                
+                // Conteúdo
+                'main_title': 'Born To Fight – Arqueologia Digital',
+                'mission_text': 'Somos a equipe Born To Fight, arqueólogos digitais dedicados à preservação e democratização do patrimônio amazônico. Nossa missão é desenterrar histórias através da tecnologia, transformando cada artefato em uma experiência sensorial e acessível que conecta passado, presente e futuro.',
+                'project_text': 'Este projeto de arqueologia digital aplica tecnologias contemporâneas para facilitar o acesso ao patrimônio arqueológico amazônico, criando uma ponte interativa entre a riqueza cultural ancestral e as possibilidades educativas modernas. Utilizamos ferramentas digitais como documentação técnica avançada para registrar, preservar e tornar acessível esse legado cultural.',
+                
+                // Tópicos
+                'rfid_title': 'Sensor RFID RC522',
+                'rfid_text': 'O sensor RFID atua como nosso scanner de campo digital, permitindo a identificação e ativação inteligente de conteúdos associados a cada réplica arqueológica. Tecnologia essencial para criar camadas de informação sobre os artefatos.',
+                'raspberry_title': 'Raspeberry Pi 4',
+                'raspberry_text': 'Esta central processa dados arqueológicos em tempo real, funcionando como nosso laboratório de campo digital. Responsável por orquestrar todo o sistema interativo e garantir uma experiência fluida e imersiva no catálogo de artefatos.',
+                'printing_title': 'Impressão 3D',
+                'printing_text': 'Através da fabricação digital, produzimos réplicas fidedignas de artefatos arqueológicos, permitindo estudo tátil e inclusão sensorial. Esta abordagem traz acessibilidade concreta ao patrimônio, transformando visualização em experiência física.',
+                
+                // Artefatos
+                'urna_marajoara': 'Urna Funerária Marajoara',
+                'urna_maraca': 'Urna Funerária Maracá',
+                'estatueta_tapajonica1': 'Estatueta Tapajônica 1',
+                'estatueta_tapajonica2': 'Estatueta Tapajônica 2',
+                'vaso_tapajonico': 'Vaso de Gargalo Tapajônico'
+            },
+            'en': {
+                // Interface
+                'catalog': 'Artifacts Catalog',
+                'inventory': 'Artifacts Inventory',
+                'download_docs': 'Download Documentation',
+                'new_artifacts': 'New Artifacts',
+                'listen': 'Listen',
+                'listen_title': 'Listen to Title',
+                'listen_mission': 'Listen to Mission',
+                'listen_project': 'Listen to Project',
+                'title': 'Title',
+                'description': 'Description',
+                'expeditions': 'Digital Expeditions Completed:',
+                'purpose': '| Archaeology with Purpose',
+                
+                // Conteúdo
+                'main_title': 'Born To Fight – Digital Archaeology',
+                'mission_text': 'We are the Born To Fight team, digital archaeologists dedicated to the preservation and democratization of Amazonian heritage. Our mission is to unearth stories through technology, transforming each artifact into a sensory and accessible experience that connects past, present and future.',
+                'project_text': 'This digital archaeology project applies contemporary technologies to facilitate access to Amazonian archaeological heritage, creating an interactive bridge between ancestral cultural richness and modern educational possibilities. We use digital tools such as advanced technical documentation to record, preserve and make this cultural legacy accessible.',
+                
+                // Tópicos
+                'rfid_title': 'RFID RC522 Sensor',
+                'rfid_text': 'The RFID sensor acts as our digital field scanner, allowing intelligent identification and activation of content associated with each archaeological replica. Essential technology for creating layers of information about artifacts.',
+                'raspberry_title': 'Raspberry Pi 4',
+                'raspberry_text': 'This central unit processes archaeological data in real time, functioning as our digital field laboratory. Responsible for orchestrating the entire interactive system and ensuring a fluid and immersive experience in the artifact catalog.',
+                'printing_title': '3D Printing',
+                'printing_text': 'Through digital fabrication, we produce faithful replicas of archaeological artifacts, allowing tactile study and sensory inclusion. This approach brings concrete accessibility to heritage, transforming visualization into physical experience.',
+                
+                // Artefatos
+                'urna_marajoara': 'Marajoara Funerary Urn',
+                'urna_maraca': 'Maracá Funerary Urn',
+                'estatueta_tapajonica1': 'Tapajonica Statuette 1',
+                'estatueta_tapajonica2': 'Tapajonica Statuette 2',
+                'vaso_tapajonico': 'Tapajonic Narrow-Necked Vase'
+            }
+        };
+
+        let currentLang = localStorage.getItem('language') || 'pt';
+        let currentVoice = currentLang === 'pt' ? 'Portuguese Female' : 'US English Female';
+
+        // Função para mudar idioma
+        function changeLanguage(lang) {
+            currentLang = lang;
+            currentVoice = lang === 'pt' ? 'Portuguese Female' : 'US English Female';
+            
+            // Atualizar localStorage
+            localStorage.setItem('language', lang);
+            
+            // Atualizar todos os elementos com data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Atualizar botão de idioma
+            document.getElementById('currentLanguage').textContent = 
+                lang === 'pt' ? 'Português' : 'English';
+            
+            // Atualizar classes ativas no dropdown
+            document.querySelectorAll('.language-option').forEach(option => {
+                if (option.getAttribute('data-lang') === lang) {
+                    option.classList.add('active');
+                } else {
+                    option.classList.remove('active');
+                }
+            });
+            
+            // Configurar voz padrão
+            if (typeof responsiveVoice !== 'undefined') {
+                responsiveVoice.setDefaultVoice(currentVoice);
+            }
+            
+            // Fechar dropdown de idioma
+            document.getElementById('languageMenu').classList.remove('show');
+            languageOpen = false;
+            
+            // Parar qualquer áudio em reprodução
+            stopAllSpeech();
+        }
+
+        // ====== CONTROLE DO DROPDOWN DE IDIOMA ======
+        let languageOpen = false;
+        const languageBtn = document.getElementById('languageBtn');
+        const languageMenu = document.getElementById('languageMenu');
+
+        // Abrir/fechar dropdown de idioma
+        languageBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (languageOpen) {
+                languageMenu.classList.remove('show');
+                languageOpen = false;
+            } else {
+                languageMenu.classList.add('show');
+                languageOpen = true;
+                
+                // Fechar outros dropdowns
+                if (dropdownOpen) {
+                    catalogMenu.classList.remove('show');
+                    dropdownOpen = false;
+                }
+            }
+        });
+
+        // Selecionar idioma
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                changeLanguage(lang);
+            });
+        });
+
+        // Fechar dropdown de idioma ao clicar fora
+        document.addEventListener('click', function(e) {
+            const isClickInLanguageMenu = languageMenu.contains(e.target);
+            const isClickOnLanguageBtn = languageBtn.contains(e.target) || e.target === languageBtn;
+            
+            if (languageOpen && !isClickInLanguageMenu && !isClickOnLanguageBtn) {
+                languageMenu.classList.remove('show');
+                languageOpen = false;
+            }
+        });
+
+        // ====== CONTROLE DO DROPDOWN CATÁLOGO ======
         let dropdownOpen = false;
         const catalogBtn = document.getElementById('catalogoBtn');
         const catalogMenu = document.getElementById('catalogMenu');
@@ -1240,6 +1536,12 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
                 catalogMenu.classList.add('show');
                 dropdownOpen = true;
                 console.log('Dropdown aberto');
+                
+                // Fechar dropdown de idioma
+                if (languageOpen) {
+                    languageMenu.classList.remove('show');
+                    languageOpen = false;
+                }
             }
         });
 
@@ -1258,10 +1560,15 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
 
         // Fechar dropdown com ESC
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && dropdownOpen) {
-                catalogMenu.classList.remove('show');
-                dropdownOpen = false;
-                console.log('Fechado com ESC');
+            if (e.key === 'Escape') {
+                if (dropdownOpen) {
+                    catalogMenu.classList.remove('show');
+                    dropdownOpen = false;
+                }
+                if (languageOpen) {
+                    languageMenu.classList.remove('show');
+                    languageOpen = false;
+                }
             }
         });
 
@@ -1285,10 +1592,85 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
             }
         });
 
-        // Contador de acessos
+        // ====== FUNÇÕES DE ÁUDIO ======
+        let isSpeaking = false;
+
+        function readSection(id) {
+            const textElement = document.getElementById(id);
+            if (!textElement) {
+                console.error('Elemento não encontrado:', id);
+                return;
+            }
+            
+            const text = textElement.textContent;
+            readText(text);
+        }
+
+        function readText(text) {
+            console.log('Lendo texto:', text.substring(0, 30) + '...');
+            
+            if (typeof responsiveVoice === 'undefined') {
+                alert(currentLang === 'pt' ? 'Sistema de áudio não está disponível. Verifique a conexão.' : 'Audio system is not available. Check your connection.');
+                return;
+            }
+            
+            if (isSpeaking) {
+                responsiveVoice.cancel();
+                isSpeaking = false;
+                return;
+            }
+            
+            // Configurações da voz
+            const options = {
+                rate: 1.0,
+                pitch: 1.0,
+                volume: 1.0
+            };
+            
+            try {
+                responsiveVoice.speak(text, currentVoice, options);
+                isSpeaking = true;
+                
+                // Detectar quando a fala termina
+                const checkStatus = setInterval(() => {
+                    if (!responsiveVoice.isPlaying()) {
+                        isSpeaking = false;
+                        clearInterval(checkStatus);
+                        console.log('Áudio finalizado');
+                    }
+                }, 500);
+                
+            } catch (error) {
+                console.error('Erro ao reproduzir áudio:', error);
+                isSpeaking = false;
+                alert(currentLang === 'pt' ? 'Erro ao reproduzir áudio. Tente novamente.' : 'Error playing audio. Please try again.');
+            }
+        }
+
+        // Função para ler texto por idioma (para os artefatos)
+        function readTextByLanguage(key) {
+            const text = translations[currentLang][key] || key;
+            readText(text);
+        }
+
+        // Função para parar todas as falas
+        function stopAllSpeech() {
+            if (typeof responsiveVoice !== 'undefined') {
+                responsiveVoice.cancel();
+                isSpeaking = false;
+            }
+        }
+
+        // ====== INICIALIZAÇÃO ======
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOM carregado - script funcionando');
             
+            // Carregar idioma salvo
+            if (localStorage.getItem('language')) {
+                changeLanguage(currentLang);
+            }
+            
+            // Contador de acessos
             let count = localStorage.getItem("visits_btf_main");
             count = count ? Number(count) + 1 : 1;
             localStorage.setItem("visits_btf_main", count);
@@ -1313,10 +1695,6 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
                 box.setAttribute('data-index', (index + 1).toString().padStart(3, '0'));
             });
             
-            // Testar se os elementos existem
-            console.log('Catalog btn existe:', !!catalogBtn);
-            console.log('Catalog menu existe:', !!catalogMenu);
-            
             // Verificar se ResponsiveVoice está carregado
             if (typeof responsiveVoice !== 'undefined') {
                 console.log('ResponsiveVoice carregado com sucesso');
@@ -1324,69 +1702,6 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
                 console.warn('ResponsiveVoice não está carregado. Verifique a chave da API.');
             }
         });
-
-        // Funções de áudio usando ResponsiveVoice
-        let isSpeaking = false;
-
-        function readSection(id) {
-            const textElement = document.getElementById(id);
-            if (!textElement) {
-                console.error('Elemento não encontrado:', id);
-                return;
-            }
-            
-            const text = textElement.textContent;
-            readText(text);
-        }
-
-        function readText(text) {
-            console.log('Lendo texto:', text.substring(0, 30) + '...');
-            
-            if (typeof responsiveVoice === 'undefined') {
-                alert('Sistema de áudio não está disponível. Verifique a conexão.');
-                return;
-            }
-            
-            if (isSpeaking) {
-                responsiveVoice.cancel();
-                isSpeaking = false;
-                return;
-            }
-            
-            // Configurações da voz em português brasileiro
-            const options = {
-                rate: 1.0,    // velocidade
-                pitch: 1.0,   // tom
-                volume: 1.0   // volume
-            };
-            
-            try {
-                responsiveVoice.speak(text, "Portuguese Female", options);
-                isSpeaking = true;
-                
-                // Detectar quando a fala termina
-                const checkStatus = setInterval(() => {
-                    if (!responsiveVoice.isPlaying()) {
-                        isSpeaking = false;
-                        clearInterval(checkStatus);
-                        console.log('Áudio finalizado');
-                    }
-                }, 500);
-                
-            } catch (error) {
-                console.error('Erro ao reproduzir áudio:', error);
-                isSpeaking = false;
-                alert('Erro ao reproduzir áudio. Tente novamente.');
-            }
-        }
-
-        // Função para parar todas as falas
-        function stopAllSpeech() {
-            if (typeof responsiveVoice !== 'undefined') {
-                responsiveVoice.cancel();
-                isSpeaking = false;
-            }
-        }
 
         // Scroll suave para o topo
         function scrollToTop() {
@@ -1433,56 +1748,6 @@ document.addEventListener("DOMContentLoaded", carregarArtefatos);
                 setTimeout(typeWriter, 1000);
             }
         });
-
-        // Teste de clique nos botões do dropdown
-        document.querySelectorAll('.catalog-item .audio-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                console.log('Botão de áudio clicado!');
-                e.stopPropagation(); // Impedir que o clique se propague
-            });
-        });
-
-        // Teste de clique nos links do dropdown
-        document.querySelectorAll('.catalog-item a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                console.log('Link do catálogo clicado:', this.href);
-                // Parar qualquer áudio em andamento
-                stopAllSpeech();
-                // Não fechar imediatamente para permitir a navegação
-                setTimeout(() => {
-                    if (dropdownOpen) {
-                        catalogMenu.classList.remove('show');
-                        dropdownOpen = false;
-                    }
-                }, 100);
-            });
-        });
-        
-        function carregarArtefatos() {
-    const container = document.getElementById("catalogoDinamico");
-    if (!container) return;
-
-    const artefatos = JSON.parse(localStorage.getItem("artefatos_btf")) || [];
-
-    artefatos.forEach((item, index) => {
-        const div = document.createElement("div");
-        div.className = "catalog-item";
-
-        div.innerHTML = `
-            <a href="artefato.html?id=${index}">
-                <i class="fas fa-cube"></i>
-                ${item.nome}
-            </a>
-            <button class="audio-btn" onclick="readText('${item.nome}')">
-                <i class="fas fa-volume-up"></i> Ouvir
-            </button>
-        `;
-
-        container.appendChild(div);
-    });
-}
-
-document.addEventListener("DOMContentLoaded", carregarArtefatos);
     </script>
 
     <!-- VLibras -->
