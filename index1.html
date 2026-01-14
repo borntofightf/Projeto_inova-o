@@ -1243,6 +1243,24 @@
         .animate-in {
             animation: slideInUp 0.5s ease-out forwards;
         }
+        
+        /* Botões de áudio duplos */
+        .audio-buttons-container {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .audio-btn-detailed {
+            background: var(--secondary);
+            color: white;
+            border: 2px solid var(--secondary);
+        }
+        
+        .audio-btn-detailed:hover {
+            background: #3a7d3f;
+            border-color: #3a7d3f;
+        }
     </style>
 </head>
 
@@ -1341,10 +1359,16 @@
                             <i class="fas fa-file-alt"></i>
                             <span>Descrição da Peça</span>
                         </div>
-                        <button class="audio-btn-small" onclick="readText(document.getElementById('descricaoTexto').innerText)">
-                            <i class="fas fa-volume-up"></i>
-                            Ouvir Descrição
-                        </button>
+                        <div class="audio-buttons-container">
+                            <button class="audio-btn-small" onclick="playOriginalDescription()">
+                                <i class="fas fa-volume-up"></i>
+                                Ouvir Resumo
+                            </button>
+                            <button class="audio-btn-small audio-btn-detailed" onclick="playDetailedDescription()">
+                                <i class="fas fa-headphones-alt"></i>
+                                Descrição Detalhada
+                            </button>
+                        </div>
                     </div>
                     <div class="section-content" id="descricaoTexto">
                         As urnas marajoaras eram usadas para abrigar restos mortais de indivíduos
@@ -1656,6 +1680,78 @@
             console.log('Página inicializada com sucesso');
         }
         
+        // Função para tocar a descrição original (curta)
+        function playOriginalDescription() {
+            const originalText = document.getElementById('descricaoTexto').innerText;
+            readText(originalText);
+        }
+        
+        // Função para tocar a descrição detalhada
+        function playDetailedDescription() {
+            const detailedDescription = `
+                A peça é um vaso cerâmico de tamanho médio, com formato arredondado e aparência robusta. 
+                Sua estética remete a um objeto arqueológico indígena, ricamente decorado com padrões 
+                geométricos e elementos antropomórficos. As cores predominantes são vermelho terroso, 
+                preto e tons claros de bege ou creme, aplicadas de forma contrastante.
+
+                Parte superior: No topo, há uma borda larga e achatada, levemente inclinada para fora, 
+                formando uma espécie de aba circular. A superfície superior dessa borda é lisa e pintada 
+                em vermelho terroso, com textura levemente irregular, sugerindo desgaste natural do tempo. 
+                Logo abaixo da borda, na lateral externa, aparecem padrões geométricos simétricos, 
+                compostos por linhas pretas e vermelhas sobre fundo claro, incluindo formas triangulares 
+                e curvas repetidas.
+
+                Região do rosto: Descendo um pouco, a peça apresenta um rosto estilizado em relevo, 
+                ocupando a parte frontal. Os olhos são circulares e salientes, projetados para fora do 
+                corpo do vaso, pintados com anéis concêntricos em preto, branco e vermelho, criando um 
+                olhar expressivo e marcante. No centro, há um nariz em relevo, curto e largo, pintado de 
+                vermelho, com detalhes verticais escuros. Logo abaixo, a boca é pequena e oval, também em 
+                relevo, destacada por um tom vermelho mais escuro.
+
+                Nas laterais do rosto, à altura dos olhos, surgem elementos circulares menores, 
+                semelhantes a adornos ou orelhas estilizadas, igualmente pintados com padrões geométricos.
+
+                Corpo do vaso: A parte central e inferior do vaso é arredondada e volumosa, formando um 
+                bojo largo. Toda essa área é densamente coberta por grafismos geométricos complexos, 
+                compostos por linhas curvas, formas ovais, padrões repetitivos e símbolos abstratos. 
+                Os desenhos são predominantemente em preto, contornados por linhas claras, com áreas 
+                preenchidas em vermelho, criando forte contraste visual.
+
+                Na região frontal inferior, destaca-se um grande círculo vermelho, centralizado, 
+                cercado por anéis claros e escuros, funcionando como ponto focal da decoração. 
+                Ao redor dele, os grafismos se organizam de forma simétrica, sugerindo equilíbrio 
+                e intencionalidade artística.
+
+                Base: A base do vaso não é visível diretamente na imagem, mas o formato indica que ele 
+                se apoia de maneira estável, com o fundo provavelmente plano ou levemente arredondado, 
+                adequado para repousar sobre superfícies.
+            `;
+            
+            // Parar qualquer áudio em execução
+            if (isSpeaking) {
+                responsiveVoice.cancel();
+                isSpeaking = false;
+                removeAudioEffects();
+                return;
+            }
+            
+            // Ler a descrição detalhada
+            readText(detailedDescription);
+            
+            // Feedback visual
+            const descBtn = document.querySelector('.audio-btn-detailed');
+            if (descBtn) {
+                descBtn.innerHTML = '<i class="fas fa-stop"></i> Parar Descrição';
+                descBtn.onclick = function() {
+                    responsiveVoice.cancel();
+                    isSpeaking = false;
+                    removeAudioEffects();
+                    descBtn.innerHTML = '<i class="fas fa-headphones-alt"></i> Descrição Detalhada';
+                    descBtn.onclick = playDetailedDescription;
+                };
+            }
+        }
+        
         // Função para abrir o formulário de avaliação completa (do catálogo)
         function openEvaluationFormFull() {
             // URL do formulário Google Forms para avaliação completa
@@ -1779,7 +1875,7 @@
         let isSpeaking = false;
 
         function readText(text) {
-            console.log('Lendo texto:', text.substring(0, 50) + '...');
+            console.log('Lendo texto:', text.substring(0, 100) + '...');
             
             if (typeof responsiveVoice === 'undefined') {
                 console.error('ResponsiveVoice não disponível');
@@ -1809,6 +1905,13 @@
                     console.log('Áudio finalizado');
                     isSpeaking = false;
                     removeAudioEffects();
+                    
+                    // Restaurar botão da descrição detalhada
+                    const descBtn = document.querySelector('.audio-btn-detailed');
+                    if (descBtn && descBtn.innerHTML.includes('Parar')) {
+                        descBtn.innerHTML = '<i class="fas fa-headphones-alt"></i> Descrição Detalhada';
+                        descBtn.onclick = playDetailedDescription;
+                    }
                 },
                 onerror: function() {
                     console.error('Erro no áudio');
@@ -1835,7 +1938,7 @@
                 btn.style.boxShadow = '0 0 15px rgba(165, 91, 52, 0.5)';
                 btn.style.animation = 'pulse 1s infinite';
                 const icon = btn.querySelector('i');
-                if (icon) {
+                if (icon && !btn.querySelector('.fa-stop')) {
                     icon.className = 'fas fa-stop';
                 }
             });
@@ -1854,7 +1957,11 @@
                 btn.style.animation = '';
                 const icon = btn.querySelector('i');
                 if (icon) {
-                    icon.className = 'fas fa-volume-up';
+                    if (btn.classList.contains('audio-btn-detailed')) {
+                        icon.className = 'fas fa-headphones-alt';
+                    } else {
+                        icon.className = 'fas fa-volume-up';
+                    }
                 }
             });
             
